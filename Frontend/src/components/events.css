@@ -1,0 +1,28 @@
+.event-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.event-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.event-image {
+    width: 100%;
+    height: auto;
+}
+.event-details {
+    margin-top: 10px;
+}
+.register-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+.register-button:hover {
+    background-color: #0056b3;
+}

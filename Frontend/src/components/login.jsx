@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './login.css'; // Import the CSS
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 
 const LoginPage = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -32,12 +34,15 @@ const LoginPage = () => {
             // Make a POST request to the backend login endpoint
             const response = await axios.post('http://localhost:8080/api/login', formData);
 
-            // Handle success
-            setMessage(response.data); // Backend returns success message
+            // Handle success: display the message and redirect
+            setMessage(response.data.message);
+            if (response.data.redirectUrl) {
+                navigate(response.data.redirectUrl); // Redirect to the URL
+            }
         } catch (error) {
             // Handle error
             if (error.response && error.response.data) {
-                setError(error.response.data); // Backend returns error message
+                setError(error.response.data.error || 'Login failed. Please try again.');
             } else {
                 setError('Login failed. Please try again.');
             }

@@ -4,6 +4,7 @@ import SignupPage from './components/signup'; // Assuming you have the signup co
 import LoginPage from './components/login';   // The newly created login component
 import HomePage from './components/home'; // Athlete home page
 import Dashboard from './components/dashboard'; // Coach dashboard
+import EventPage from "./components/EventPage";
 import './navbar.css';
 
 const App = () => {
@@ -12,10 +13,10 @@ const App = () => {
             <div className="navbar">
                 <div className="logo">Sports </div> {/* Logo or title */}
                 <ul>
-                    <li><Link to="/">News</Link></li>
-                    <li><Link to="/">Events</Link></li>
+                    <li><Link to="/home">Home</Link></li>
+                    <li><Link to="/EventPage">Events</Link></li>
                     <li><Link to="/">Results</Link></li>
-                    <li><Link to="/">Coaches</Link></li>
+                    <li><Link to="/">News</Link></li>
                     <li><Link to="/">Athletes</Link></li>
                 </ul>
                 <div className="auth-links">
@@ -28,6 +29,7 @@ const App = () => {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path={"/EventPage"} element={<EventPage />} />
             </Routes>
         </Router>
     );

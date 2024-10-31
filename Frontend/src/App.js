@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-router-dom';
-import SignupPage from './components/signup'; // Assuming you have the signup component
-import LoginPage from './components/login';   // The newly created login component
-import HomePage from './components/home'; // Athlete home page
-import Dashboard from './components/dashboard'; // Coach dashboard
-import EventPage from "./components/EventPage";
+import SignupPage from './components/signup';
+import LoginPage from './components/login';
+import HomePage from './components/home';
+import Dashboard from './components/dashboard';
+import EventPage from './components/EventPage';
 import './navbar.css';
 
 const App = () => {
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const isLoggedIn = sessionStorage.getItem("loggedIn") === "true";
+        setLoggedIn(isLoggedIn);
+    }, []);
+
+    const ProtectedRoute = ({ children }) => {
+        return loggedIn ? children : <Navigate to="/login" replace />;
+    };
+
     return (
         <Router>
             <div className="navbar">
-                <div className="logo">Sports </div> {/* Logo or title */}
+                <div className="logo">Sports</div>
                 <ul>
                     <li><Link to="/home">Home</Link></li>
                     <li><Link to="/EventPage">Events</Link></li>
@@ -20,16 +31,23 @@ const App = () => {
                     <li><Link to="/">Athletes</Link></li>
                 </ul>
                 <div className="auth-links">
-                    <Link to="/login">Login</Link>
-                    <Link to="/signup">Sign Up</Link>
+                    {loggedIn ? (
+                        <button onClick={() => { setLoggedIn(false); sessionStorage.removeItem("loggedIn"); }}className="logout-button">Logout</button>
+                    ) : (
+                        <>
+                            <Link to="/login">Login</Link>
+                            <Link to="/signup">Sign Up</Link>
+                        </>
+                    )}
                 </div>
             </div>
             <Routes>
+                <Route path="/" element={<Navigate to="/login" replace />} />
                 <Route path="/signup" element={<SignupPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path={"/EventPage"} element={<EventPage />} />
+                <Route path="/login" element={<LoginPage setLoggedIn={setLoggedIn} />} />
+                <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+                <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                <Route path="/EventPage" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />
             </Routes>
         </Router>
     );

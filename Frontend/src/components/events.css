@@ -1,28 +1,75 @@
 .event-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-.event-box {
-    border: 1px solid #ddd;
     padding: 20px;
-    width: 250px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1200px; /* Increased width for better layout */
+    margin: 0 auto;
+    text-align: center;
 }
-.event-image {
-    width: 100%;
-    height: auto;
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #333;
 }
-.event-details {
-    margin-top: 10px;
-}
-.register-button {
+
+button {
     background-color: #007bff;
     color: white;
-    padding: 10px;
     border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
     cursor: pointer;
+    margin-bottom: 20px; /* Space below the button */
 }
-.register-button:hover {
+
+button:hover {
     background-color: #0056b3;
+}
+
+.event-grid {
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+    gap: 20px; /* Space between grid items */
+}
+
+.event-box {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column; /* Stack image below details */
+    align-items: center; /* Center items horizontally */
+}
+
+.event-image {
+    width: 100%; /* Make the image responsive */
+    height: auto;
+    border-radius: 5px;
+    margin-top: 15px; /* Space above the image */
+}
+
+.event-details {
+    text-align: left; /* Align text to the left */
+    width: 100%; /* Ensure details take full width */
+}
+
+.register-button {
+    background-color: #28a745; /* Green for register button */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.register-button:hover {
+    background-color: black; /* Darker green on hover */
+}
+
+.error-message {
+    color: red;
+    margin: 10px 0;
+}
+
+.success-message {
+    color: green;
+    margin: 10px 0;
 }

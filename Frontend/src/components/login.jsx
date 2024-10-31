@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './login.css'; // Import the CSS
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import './login.css';
+import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const LoginPage = ({ setLoggedIn }) => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: '',
         email: '',
         password: '',
-        userType: 'athlete' // Default user type
+        userType: 'athlete'
     });
+    const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
 
-    const [error, setError] = useState(''); // For error messages
-    const [message, setMessage] = useState(''); // For success messages
-
-    // Handle input changes
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -23,29 +21,22 @@ const LoginPage = () => {
         });
     };
 
-    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Clear previous messages
             setError('');
             setMessage('');
-
-            // Make a POST request to the backend login endpoint
             const response = await axios.post('http://localhost:8080/api/login', formData);
-
-            // Handle success: display the message and redirect
             setMessage(response.data.message);
+
+            // Set login state and save to sessionStorage
+            setLoggedIn(true);
+            sessionStorage.setItem("loggedIn", "true");
             if (response.data.redirectUrl) {
-                navigate(response.data.redirectUrl); // Redirect to the URL
+                navigate(response.data.redirectUrl);
             }
         } catch (error) {
-            // Handle error
-            if (error.response && error.response.data) {
-                setError(error.response.data.error || 'Login failed. Please try again.');
-            } else {
-                setError('Login failed. Please try again.');
-            }
+            setError(error.response?.data.error || 'Login failed. Please try again.');
         }
     };
 
@@ -53,24 +44,14 @@ const LoginPage = () => {
         <div className="login-container">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required />
-                </div>
-                <div>
-                    <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
-                </div>
-                <div>
-                    <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
-                </div>
-                <div>
-                    <select name="userType" value={formData.userType} onChange={handleChange}>
-                        <option value="athlete">Athlete</option>
-                        <option value="coach">Coach</option>
-                    </select>
-                </div>
+                <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required />
+                <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+                <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+                <select name="userType" value={formData.userType} onChange={handleChange}>
+                    <option value="athlete">Athlete</option>
+                    <option value="coach">Coach</option>
+                </select>
                 <button type="submit">Login</button>
-
-                {/* Display success or error message below the button */}
                 {message && <p className="success-message">{message}</p>}
                 {error && <p className="error-message">{error}</p>}
             </form>

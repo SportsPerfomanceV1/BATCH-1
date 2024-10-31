@@ -11,13 +11,13 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String eventId;
-    private String imageUrl;
+    private String image_url;
     private String date;
     private String time;
     private Double fee;
     private String organizer;
     private String location;
-
+    private String title;
     // Getters and Setters
 
     public Long getId() {
@@ -36,12 +36,12 @@ public class Event {
         this.eventId = eventId;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage_url() {
+        return image_url;
     }
 
     public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+        this.image_url = imageUrl;
     }
 
     public String getDate() {
@@ -80,5 +80,11 @@ public class Event {
     }
     public void setLocation(String location) {
         this.location = location;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public String getTitle() {
+        return title;
     }
 }

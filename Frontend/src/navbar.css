@@ -18,6 +18,27 @@ body {
     margin: 0;
     padding-top: 80px;  /* Add padding to push content below the fixed navbar */
 }
+.logout-button {
+    background-color: #ff4d4d; /* Red background color */
+    color: white; /* White text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Padding around the text */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    margin-left: 10px; /* Space from other elements */
+}
+
+.logout-button:hover {
+    background-color: #ff1a1a; /* Darker red on hover */
+}
+
+.logout-button:focus {
+    outline: none; /* Remove outline on focus */
+}
+
+
 
 /* Logo or brand title styling */
 .navbar .logo {

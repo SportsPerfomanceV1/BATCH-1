@@ -32,6 +32,7 @@ const LoginPage = ({ setLoggedIn }) => {
             // Set login state and save to sessionStorage
             setLoggedIn(true);
             sessionStorage.setItem("loggedIn", "true");
+            sessionStorage.setItem("username", formData.username); // Save username to sessionStorage
             if (response.data.redirectUrl) {
                 navigate(response.data.redirectUrl);
             }
@@ -44,10 +45,35 @@ const LoginPage = ({ setLoggedIn }) => {
         <div className="login-container">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
-                <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required />
-                <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
-                <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
-                <select name="userType" value={formData.userType} onChange={handleChange}>
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                />
+                <select
+                    name="userType"
+                    value={formData.userType}
+                    onChange={handleChange}
+                >
                     <option value="athlete">Athlete</option>
                     <option value="coach">Coach</option>
                 </select>

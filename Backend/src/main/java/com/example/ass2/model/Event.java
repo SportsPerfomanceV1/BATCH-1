@@ -10,7 +10,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String eventId;
+    private Long eventId;
     private String image_url;
     private String date;
     private String time;
@@ -28,11 +28,11 @@ public class Event {
         this.id = id;
     }
 
-    public String getEventId() {
+    public Long getEventId() {
         return eventId;
     }
 
-    public void setEventId(String eventId) {
+    public void setEventId(Long eventId) {
         this.eventId = eventId;
     }
 

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './events.css';
 
+
 const EventPage = () => {
     const [events, setEvents] = useState([]);
     const [userRegistrations, setUserRegistrations] = useState([]); // State for user registrations

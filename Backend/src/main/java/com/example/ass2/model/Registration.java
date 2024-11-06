@@ -2,11 +2,16 @@ package com.example.ass2.model;
 
 import java.time.LocalDate;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "registrations")
 public class Registration {
 
+    // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long registrationId;
@@ -26,47 +31,6 @@ public class Registration {
     // Default constructor
     public Registration() {
         this.status = "pending"; // Set default status to pending
-    }
-
-    // Getters and Setters
-    public Long getRegistrationId() {
-        return registrationId;
-    }
-
-    public void setRegistrationId(Long registrationId) {
-        this.registrationId = registrationId;
-    }
-
-    public Long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
-    }
-
-    public Long getAthleteId() {
-        return athleteId;
-    }
-
-    public void setAthleteId(Long athleteId) {
-        this.athleteId = athleteId;
-    }
-
-    public LocalDate getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(LocalDate registrationDate) {
-        this.registrationDate = registrationDate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     @Override

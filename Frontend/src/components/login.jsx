@@ -33,6 +33,8 @@ const LoginPage = ({ setLoggedIn }) => {
             setLoggedIn(true);
             sessionStorage.setItem("loggedIn", "true");
             sessionStorage.setItem("username", formData.username); // Save username to sessionStorage
+            sessionStorage.setItem("userType", formData.userType); // Save userType to sessionStorage
+
             if (response.data.redirectUrl) {
                 navigate(response.data.redirectUrl);
             }

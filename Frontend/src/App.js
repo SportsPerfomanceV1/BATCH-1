@@ -5,6 +5,7 @@ import LoginPage from './components/login';
 import HomePage from './components/home';
 import Dashboard from './components/dashboard';
 import EventPage from './components/EventPage';
+import ProfilePage from "./components/profile";
 import './navbar.css';
 
 const App = () => {
@@ -28,7 +29,7 @@ const App = () => {
                     <li><Link to="/EventPage">Events</Link></li>
                     <li><Link to="/">Results</Link></li>
                     <li><Link to="/">News</Link></li>
-                    <li><Link to="/">Athletes</Link></li>
+                    <li><Link to="/profile">Profile</Link></li>
                 </ul>
                 <div className="auth-links">
                     {loggedIn ? (
@@ -48,6 +49,7 @@ const App = () => {
                 <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
                 <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                 <Route path="/EventPage" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />
+                <Route path={"/profile"} element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
             </Routes>
         </Router>
     );

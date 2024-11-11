@@ -1,20 +1,7 @@
 package com.example.ass2.controller;
 
-
 import com.example.ass2.model.Event;
-import com.example.ass2.repository.EventRepository;
 import com.example.ass2.service.AddEventService;
-import com.example.ass2.service.EventService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-
-
-
-
-import com.example.ass2.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

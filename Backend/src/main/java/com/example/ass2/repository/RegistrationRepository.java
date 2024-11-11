@@ -11,6 +11,22 @@
 //
 //}
 
+//package com.example.ass2.repository;
+//
+//import com.example.ass2.model.Registration;
+//import org.springframework.data.jpa.repository.JpaRepository;
+//import org.springframework.stereotype.Repository;
+//
+//import java.util.List;
+//
+//@Repository
+//public interface RegistrationRepository extends JpaRepository<Registration, Long> {
+//    List<Registration> findByStatus(String status);
+//    List<Registration> findByEventIdAndStatus(Long eventId, String status);
+//    List<Registration> findByAthleteId(Long athleteId);
+//}
+
+//For no duplicate registration
 package com.example.ass2.repository;
 
 import com.example.ass2.model.Registration;
@@ -18,10 +34,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
     List<Registration> findByStatus(String status);
-    List<Registration> findByEventIdAndStatus(Long eventId, String status);
+
     List<Registration> findByAthleteId(Long athleteId);
+
+    Optional<Registration> findByAthleteIdAndEventId(Long athleteId, Long eventId);
 }
+

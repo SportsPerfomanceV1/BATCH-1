@@ -3,7 +3,7 @@ package com.example.ass2.service;
 import com.example.ass2.model.Athlete;
 import com.example.ass2.model.Coach;
 import com.example.ass2.repository.AthleteRepository;
-import com.example.ass2.repository.coachRepository;
+import com.example.ass2.repository.CoachRepository;
 import com.example.ass2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
     private AthleteRepository athleteRepository;
 
     @Autowired
-    private coachRepository coachRepository;
+    private CoachRepository coachRepository;
 
     @Override
     public Athlete findAthleteByUsername(String username) {

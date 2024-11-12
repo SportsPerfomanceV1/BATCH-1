@@ -48,6 +48,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class LoginService {
 
@@ -73,11 +75,6 @@ public class LoginService {
             Coach coach = coachRepository.findByUsernameAndEmailAndPassword(username, email, password);
             if (coach != null && passwordEncoder.matches(password, coach.getPassword())) {
                 return "Coach login successful";
-            }
-        } else if ("admin".equalsIgnoreCase(userType)) {
-            Admin admin = adminRepository.findByUsernameAndEmailAndPassword(username, email, password);
-            if (admin != null && passwordEncoder.matches(password, admin.getPassword())) {
-                return "Admin login successful";
             }
         }
         return "Login failed. Invalid credentials or user type.";

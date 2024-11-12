@@ -168,7 +168,7 @@ const LoginPage = ({ setLoggedIn }) => {
                 >
                     <option value="athlete">Athlete</option>
                     <option value="coach">Coach</option>
-                    <option value="admin">Admin</option> {/* Added Admin user type */}
+
                 </select>
                 <button type="submit">Login</button>
                 {message && <p className="success-message">{message}</p>}

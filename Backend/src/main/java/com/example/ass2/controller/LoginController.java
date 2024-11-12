@@ -118,17 +118,7 @@ public class LoginController {
                 response.put("error", "Invalid coach credentials");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
-        } else if ("admin".equalsIgnoreCase(userType)) {
-            Admin admin = adminRepository.findByUsernameAndEmailAndPassword(username, email, password);
-            if (admin != null) {
-                response.put("message", "Admin logged in successfully");
-                response.put("redirectUrl", "/admin");
-                return ResponseEntity.ok(response);
-            } else {
-                response.put("error", "Invalid admin credentials");
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-            }
-        } else {
+        }  else {
             response.put("error", "Invalid user type");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }

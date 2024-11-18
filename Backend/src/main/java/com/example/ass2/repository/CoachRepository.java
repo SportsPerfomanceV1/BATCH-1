@@ -10,6 +10,5 @@ import java.util.Optional;
 @Repository
 public interface CoachRepository extends JpaRepository<Coach, Long> {
     Coach findByUsernameAndEmailAndPassword(String username, String email, String password);
-
     Coach findByUsername(String username);
 }

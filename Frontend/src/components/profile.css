@@ -1,82 +1,192 @@
 .profile-container {
-    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+}
+.profile-details {
+    position: relative;
+    padding: 20px;
+    background-color: #f8f9fa;
     border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
 }
-
-h2 {
-    text-align: center;
-    color: #333;
-}
-
-.profile-details label {
-    display: block;
-    margin-bottom: 15px;
-    color: #555;
-    font-weight: bold;
-}
-
-.profile-details input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #333;
-    outline: none;
-}
-
-.profile-details input:disabled {
-    background-color: #eee;
-    color: #777;
-}
-
-.profile-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-button {
+.edit-profile-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: black;
+    color: white;
+    border: none;
     padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.edit-profile-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.edit-profile-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.edit-profile-form .form-row {
+    display: flex;
+    gap: 10px;
+}
+.edit-profile-form input[type="text"],
+.edit-profile-form input[type="email"],
+.edit-profile-form input[type="password"] {
+    width:98%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     font-size: 16px;
+}
+.edit-profile-form .password-fields {
+    position: relative;
+}
+.edit-profile-form .password-toggle-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.edit-profile-form .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.edit-profile-form button {
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-size: 16px;
 }
-
-.edit-button {
+.edit-profile-form button[type="submit"] {
+    background-color: black;
+    color: white;
+}
+.edit-profile-form button[type="button"] {
+    background-color: #e5e5e5;
+    color: #333;
+}
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+.password-fields {
+    position: relative;
+}
+.password-toggle-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.user-profile,
+.user-registrations {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+.status-box {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: black;
+    font-weight: bold;
+}
+.status-box.pending {
+    background-color: yellow;
+}
+.status-box.accepted {
+    background-color: green;
+}
+.status-box.rejected {
+    background-color: red;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+.btn {
     background-color: #007bff;
     color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
-
-.save-button {
-    background-color: #28a745;
-    color: white;
+.btn:hover {
+    background-color: #0056b3;
 }
-
-.cancel-button {
-    background-color: #dc3545;
-    color: white;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-.success-message, .error-message {
-    text-align: center;
-    margin: 10px 0;
-    font-size: 14px;
-    color: #28a745;
-}
-
 .error-message {
     color: #dc3545;
+    margin-bottom: 10px;
+}
+.success-message {
+    color: #28a745;
+    margin-bottom: 10px;
+}
+.user-registrations table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.user-registrations th,
+.user-registrations td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+.user-registrations th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #333;
+}
+.user-registrations tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+.user-registrations tr:hover {
+    background-color: #f1f3f5;
+}
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 10px;
+    }
+    .user-registrations table {
+        font-size: 14px;
+    }
+    .user-registrations th,
+    .user-registrations td {
+        padding: 8px;
+    }
 }

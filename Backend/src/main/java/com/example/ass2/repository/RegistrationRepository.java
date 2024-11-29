@@ -8,4 +8,6 @@ import java.util.List;
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
     // Custom query methods (if needed)
     List<Registration> findByAthleteId(Long athleteId);
+
+    List<Registration> findByEventId(Long eventId);
 }

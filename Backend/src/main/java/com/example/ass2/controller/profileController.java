@@ -41,25 +41,23 @@ public class profileController {
         }
     }
 
-    // Update User Profile based on userType (athlete or coach)
-    @PutMapping("/profile/update/{username}")
+    @PatchMapping("/profile/update/{username}")
     public ResponseEntity<?> updateUserProfile(
             @PathVariable String username,
             @RequestParam String userType,
             @RequestBody Map<String, String> profileData) {
         try {
-            boolean isUpdated;
+            Object updatedProfile;
             if (userType.equalsIgnoreCase("athlete")) {
-                isUpdated = userService.updateAthleteProfile(username, profileData);
+                updatedProfile = userService.updateAthleteProfile(username, profileData);
             } else if (userType.equalsIgnoreCase("coach")) {
-                isUpdated = userService.updateCoachProfile(username, profileData);
+                updatedProfile = userService.updateCoachProfile(username, profileData);
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user type");
             }
 
-            // Check if update was successful
-            if (isUpdated) {
-                return ResponseEntity.ok("Profile updated successfully.");
+            if (updatedProfile != null) {
+                return ResponseEntity.ok(updatedProfile);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }

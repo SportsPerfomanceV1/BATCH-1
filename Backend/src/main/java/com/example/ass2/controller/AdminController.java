@@ -28,10 +28,8 @@ public class AdminController {
         );
 
         if (admin.isPresent()) {
-            // Return a response with a dashboard URL
             return ResponseEntity.ok("/admin/dashboard");
         } else {
-            // Return an unauthorized status with a message
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }

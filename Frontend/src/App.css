@@ -1,8 +1,22 @@
-.App {
-  font-family: 'Arial', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f4f4f4;
-}
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+ }
+ body {
+    background-image: url('/public/images/background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+ }
+ .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+ }
+ .main-content {
+    flex: 1;
+    padding-top: 88px;
+    padding-bottom: 200px;
+ }

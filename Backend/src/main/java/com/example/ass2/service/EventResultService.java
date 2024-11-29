@@ -22,4 +22,8 @@ public class EventResultService {
         eventResult.setPublished(true);
         return eventResultRepository.save(eventResult);
     }
+
+    public List<EventResult> getResultsByAthleteId(Long athleteId){
+        return eventResultRepository.findByAthleteId(athleteId);
+    }
 }

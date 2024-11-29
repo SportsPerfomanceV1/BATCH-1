@@ -28,4 +28,15 @@ public class RegistrationService {
     public List<Registration> findByAthleteId(Long athleteId) {
         return registrationRepository.findByAthleteId(athleteId); // Use repository method to fetch registrations
     }
+
+    public List<Registration> findByEventId(Long eventId) {
+        return registrationRepository.findByEventId(eventId);
+    }
+
+    public Registration updateRegistrationStatus(Long registrationId, String status) {
+        Registration registration = registrationRepository.findById(registrationId)
+                .orElseThrow(() -> new RuntimeException("Registration not found"));
+        registration.setStatus(status);
+        return registrationRepository.save(registration);
+    }
 }

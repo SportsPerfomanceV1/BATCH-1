@@ -13,11 +13,6 @@ public class AthleteService {
     @Autowired
     private AthleteRepository athleteRepository;
 
-    // Method to find an athlete by their username
-    public Athlete findByUsername(String username) {
-        Optional<Athlete> athlete = athleteRepository.findByUsername(username);
-        return athlete.orElse(null); // Return athlete if found, else null
-    }
+    public Athlete findByUsername(String username) { return athleteRepository.findByUsername(username); }
 
-    // Add more service methods as needed
 }

@@ -23,9 +23,6 @@ public class RegistrationController {
         return ResponseEntity.ok("Registration successful: " + registration.getRegistrationId());
     }
 
-
-
-    // New endpoint to fetch registrations by athlete ID
     @GetMapping
     public ResponseEntity<List<Registration>> getRegistrationsByAthleteId(@RequestParam Long athleteId) {
         List<Registration> registrations = registrationService.findByAthleteId(athleteId);
@@ -33,5 +30,26 @@ public class RegistrationController {
             return ResponseEntity.noContent().build(); // Return 204 No Content if no registrations found
         }
         return ResponseEntity.ok(registrations); // Return 200 OK with the list of registrations
+    }
+
+    @GetMapping("/event/{eventId}")
+    public ResponseEntity<List<Registration>> getRegistrationsByEventId(@PathVariable Long eventId) {
+        List<Registration> registrations = registrationService.findByEventId(eventId);
+        if (registrations.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(registrations);
+    }
+
+    @PatchMapping("/{registrationId}/status")
+    public ResponseEntity<String> updateRegistrationStatus(
+            @PathVariable Long registrationId,
+            @RequestParam String status) {
+        try {
+            Registration updatedRegistration = registrationService.updateRegistrationStatus(registrationId, status);
+            return ResponseEntity.ok("Registration status updated successfully: " + updatedRegistration.getStatus());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to update registration status: " + e.getMessage());
+        }
     }
 }

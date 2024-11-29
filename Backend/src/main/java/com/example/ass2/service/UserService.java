@@ -8,6 +8,6 @@ import java.util.Map;
 public interface UserService {
     Athlete findAthleteByUsername(String username);
     Coach findCoachByUsername(String username);
-    boolean updateAthleteProfile(String username, Map<String, String> profileData);
-    boolean updateCoachProfile(String username, Map<String, String> profileData);
+    Athlete updateAthleteProfile(String username, Map<String, String> profileData);
+    Coach updateCoachProfile(String username, Map<String, String> profileData);
 }

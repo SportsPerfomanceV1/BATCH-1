@@ -1,9 +1,7 @@
 package com.example.ass2;
 
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 
 @SpringBootApplication
 public class Ass2Application {

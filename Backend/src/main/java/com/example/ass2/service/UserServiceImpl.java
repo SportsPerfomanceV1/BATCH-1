@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Athlete findAthleteByUsername(String username) {
         // Return Athlete or null if not found
-        return athleteRepository.findByUsername(username).orElse(null);
+        return athleteRepository.findByUsername(username);
     }
 
     @Override
@@ -32,32 +33,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateAthleteProfile(String username, Map<String, String> profileData) {
-        // Find Athlete by username
-        Athlete athlete = athleteRepository.findByUsername(username).orElse(null);
+    public Athlete updateAthleteProfile(String username, Map<String, String> profileData) {
+        Athlete athlete = athleteRepository.findByUsername(username);
         if (athlete != null) {
-            athlete.setFirstname(profileData.get("firstname"));
-            athlete.setLastname(profileData.get("lastname"));
-            athlete.setEmail(profileData.get("email"));
-            athlete.setPassword(profileData.get("password"));
-            athleteRepository.save(athlete);
-            return true;
+            if (profileData.containsKey("firstname")) athlete.setFirstname(profileData.get("firstname"));
+            if (profileData.containsKey("lastname")) athlete.setLastname(profileData.get("lastname"));
+            if (profileData.containsKey("email")) athlete.setEmail(profileData.get("email"));
+            if (profileData.containsKey("password")) athlete.setPassword(profileData.get("password"));
+            // Add other fields as necessary
+            return athleteRepository.save(athlete);
         }
-        return false;
+        return null;
     }
 
     @Override
-    public boolean updateCoachProfile(String username, Map<String, String> profileData) {
-        // Find Coach by username directly (no Optional)
+    public Coach updateCoachProfile(String username, Map<String, String> profileData) {
         Coach coach = coachRepository.findByUsername(username);
         if (coach != null) {
-            coach.setFirstname(profileData.get("firstname"));
-            coach.setLastname(profileData.get("lastname"));
-            coach.setEmail(profileData.get("email"));
-            coach.setPassword(profileData.get("password"));
-            coachRepository.save(coach);
-            return true;
+            if (profileData.containsKey("firstname")) { coach.setFirstname(profileData.get("firstname")); }
+            if (profileData.containsKey("lastname")) { coach.setLastname(profileData.get("lastname")); }
+            if (profileData.containsKey("email")) { coach.setEmail(profileData.get("email")); }
+            if (profileData.containsKey("password")) { coach.setPassword(profileData.get("password")); }
+            return coachRepository.save(coach);
         }
-        return false;
+        return null;
     }
 }

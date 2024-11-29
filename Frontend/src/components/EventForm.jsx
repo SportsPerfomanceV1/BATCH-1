@@ -12,6 +12,16 @@ const EventForm = ({ refreshEvents }) => {
     const [imageUrl, setImageUrl] = useState('');
     const [message, setMessage] = useState('');
 
+    const refreshEvents = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/events');
+            setEvents(response.data); // Update events state
+        } catch (error) {
+            console.error('Error fetching events:', error);
+            setError('Failed to fetch events. Please try again later.');
+        }
+    };
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         const eventData = { title, organizer, date, time, fee, location, image_url: imageUrl };

@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/admin/results")
+@RequestMapping("/api/results")
 public class EventResultController {
 
     @Autowired
@@ -17,6 +18,11 @@ public class EventResultController {
     @GetMapping("/{eventId}")
     public List<EventResult> getPublishedResults(@PathVariable Long eventId) {
         return eventResultService.getPublishedResultsByEventId(eventId);
+    }
+
+    @GetMapping("/athlete/{athleteId}")
+    public List<EventResult> getAthleteResults(@PathVariable Long athleteId) {
+        return eventResultService.getResultsByAthleteId(athleteId);
     }
 
     @PostMapping("/publish")

@@ -1,0 +1,116 @@
+.login-container,
+.signup-container {
+    background-color: white;
+    padding: 30px 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-width: 90%;
+    margin: 60px auto;
+}
+
+.login-container h2, .signup-container h2 {
+    text-align: left;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.login-form input[type="text"], .signup-form input[type="text"], 
+.login-form input[type="password"], .signup-form input[type="password"], 
+.login-form input[type="email"], .signup-form input[type="email"], 
+.login-form select, .signup-form select {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.name-fields {
+	display: flex;
+	justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}
+.name-fields input {
+    flex: 1;
+}
+
+.password-fields {
+    position: relative;
+    width: 100%;
+}
+.password-fields input{
+    width: 80%;
+}
+.password-toggle-icon {
+    position: absolute;
+    right: 10px;
+    top: 55%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+}
+.password-field span {
+    position: absolute;
+    right: 2px;
+    top: 20px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.login-form button[type="submit"], .signup-form button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.login-form button[type="submit"]:hover ,.signup-form button[type="submit"]{
+    background-color: #333;
+}
+
+.success-message {
+    color: green;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .login-container, .signup-container {
+        width: 90%;
+        padding: 30px 20px;
+    }
+
+    .name-fields{
+        flex-direction: column;
+        gap: 10px;
+    }
+    .name-fields input{
+        width: 100%;
+    }
+}

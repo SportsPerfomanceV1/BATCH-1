@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface EventResultRepository extends JpaRepository<EventResult, Long> {
     List<EventResult> findByEventIdAndPublishedTrue(Long eventId);
+    List<EventResult> findByAthleteId(Long athleteId);
 }

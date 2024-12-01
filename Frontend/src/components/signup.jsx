@@ -3,27 +3,25 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import PasswordStrengthMeter from './PasswordStrengthMeter';
 import './login-signup.css';
-import showPasswordIcon from '../image/show.png';
-import hidePasswordIcon from '../image/hide.png';
 
 const SignupPage = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         firstname: '',
         lastname: '',
-//        middlename: '', // Optional field
         username: '',
         email: '',
         password: '',
-        confirmPassword: '', // Added confirmPassword state
-        userType: 'athlete' // Default user type
+        confirmPassword: '',
+        userType: 'athlete'
     });
 
-    const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
-    const [error, setError] = useState(''); // For error messages
-    const [message, setMessage] = useState(''); // For success messages
+    const showPasswordIcon = `${process.env.PUBLIC_URL}/images/show.png`
+    const hidePasswordIcon = `${process.env.PUBLIC_URL}/images/hide.png`
+    const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
 
-    // Handle input changes
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -31,34 +29,25 @@ const SignupPage = () => {
         });
     };
 
-    // Toggle password visibility
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Ensure passwords match
         if (formData.password !== formData.confirmPassword) {
             setError('Passwords do not match');
             return;
         }
         try {
-            // Clear previous messages
             setError('');
             setMessage('');
-
-            // Make a POST request to the backend signup endpoint
             const response = await axios.post('http://localhost:8080/api/signup', formData);
-
-            // Handle success
             setMessage(response.data.message || 'Signup successful! Redirecting to login...');
-            navigate('/login'); // Redirect to the login page after a signup
+            navigate('/login');
         } catch (error) {
-            // Handle error
             if (error.response && error.response.data) {
-                setError(error.response.data); // Backend returns error message
+                setError(error.response.data);
             } else {
                 setError('Signup failed. Please try again.');
             }

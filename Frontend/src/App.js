@@ -18,12 +18,13 @@ import './App.css';
 const App = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [userType, setUserType] = useState('');
 
-    // Load login and admin status on mount
     useEffect(() => {
         const isLoggedIn = sessionStorage.getItem("loggedIn") === "true";
-        const userType = sessionStorage.getItem("userType");
+        const usertype = sessionStorage.getItem("userType");
         setLoggedIn(isLoggedIn);
+        setUserType(usertype);
         if (userType === 'admin'){
             setIsAdmin(true);
         }
@@ -34,7 +35,8 @@ const App = () => {
         setIsAdmin(false);
         sessionStorage.removeItem("loggedIn");
         sessionStorage.removeItem("isAdmin");
-    };
+        sessionStorage.removeItem("userType");
+    };  
 
     const ProtectedRoute = ({ children }) => {
         return loggedIn ? children : <Navigate to="/login" replace />;
@@ -43,21 +45,17 @@ const App = () => {
     return (
         <Router>
             <div className="app-container">
-                <Navbar 
-                    loggedIn={loggedIn} 
-                    isAdmin={isAdmin} 
+                <Navbar
+                    loggedIn={loggedIn}
                     onLogout={handleLogout} 
                 />
                 <div className="main-content">
                     <Routes>
-                        {/* Default route */}
                         <Route path="/" element={<Navigate to="/login" replace />} />
 
-                        {/* Public routes */}
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/login" element={<LoginPage setLoggedIn={setLoggedIn} />} />
 
-                        {/* Protected routes */}
                         <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
                         <Route path="/events" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />
                         <Route path="/results" element={<ProtectedRoute><ResultPage /></ProtectedRoute>} />
@@ -65,7 +63,6 @@ const App = () => {
                         <Route path="/news" element={<ProtectedRoute><NewsPage /></ProtectedRoute>} />
                         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
 
-                        {/* Admin-only routes */}
                         <Route path="/admin-dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                         <Route path="/admin-events" element={<ProtectedRoute><AdminEventsPage /></ProtectedRoute>} />
                         <Route path="/admin-results" element={<ProtectedRoute><AdminResultsPage /></ProtectedRoute>} />

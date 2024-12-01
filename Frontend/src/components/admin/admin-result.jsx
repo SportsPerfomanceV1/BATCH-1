@@ -64,7 +64,7 @@ const AdminResultsPage = () => {
 
     const renderEventCard = (event) => (
         <div key={event.id} className="event-card">
-            <img src={`${process.env.PUBLIC_URL}/images/${event.id}.jpg`} alt={event.title} className="event-image" />
+            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="event-image" />
             <div className="event-details">
                 <h3>{event.title}</h3>
                 <p>Organizer: {event.organizer}</p>

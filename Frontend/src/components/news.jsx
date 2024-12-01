@@ -38,7 +38,7 @@ const NewsPage = () => {
 
         return (
             <div key={event.id} className="news-card">
-                <img src={`${process.env.PUBLIC_URL}/images/${event.id}.jpg`} alt={event.title} className="news-image" />
+                <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="news-image" />
                 <div className="news-details">
                     <h3>{newsHeading}</h3>
                     <p>Organizer: {event.organizer}</p>

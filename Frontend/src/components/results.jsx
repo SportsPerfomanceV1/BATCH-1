@@ -106,7 +106,7 @@ const ResultPage = () => {
         return (
             <div className="result-popup">
                 <div className="result-popup-content">
-                    <img src={result.eventDetails.image_url} alt={result.eventDetails?.title} className="event-image" />
+                    <img src={`${process.env.PUBLIC_URL}/event_pics/${result.eventDetails?.id}.webp`} alt={result.eventDetails?.title} className="event-image" />
                     <h2>{result.eventDetails?.title}</h2>
                     <p><strong>Organizer:</strong> {result.eventDetails?.organizer}</p>
                     <p><strong>Date:</strong> {result.eventDetails?.date}</p>
@@ -157,7 +157,7 @@ const ResultPage = () => {
 
     const renderEventCard = (event) => (
         <div key={event.id} className="event-card">
-            <img src={`${process.env.PUBLIC_URL}/images/${event.id}.jpg`} alt={event.title} className="event-image" />
+            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="event-image" />
             <div className="event-details">
                 <h3>{event.title}</h3>
                 <p>Organizer: {event.organizer}</p>
@@ -180,7 +180,7 @@ const ResultPage = () => {
                         const event = events[result.eventId];
                         return (
                             <div key={result.id} className="result-card">
-                                <img src={`${process.env.PUBLIC_URL}/images/${event?.id}.jpg`} alt={event?.title} className="event-image" />
+                                <img src={`${process.env.PUBLIC_URL}/event_pics/${event?.id}.webp`} alt={event?.title} className="event-image" />
                                 <h3>{event?.title}</h3>
                                 <p><strong>Organizer:</strong> {event?.organizer}</p>
                                 <p><strong>Date:</strong> {event?.date}</p>

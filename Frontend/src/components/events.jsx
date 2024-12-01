@@ -112,43 +112,6 @@ const EventPage = () => {
         }
     };
 
-    const renderEventCard = (event, isCompleted) => (
-        <div key={event.id} className="event-card">
-            <img src={`${process.env.PUBLIC_URL}/images/${event.id}.jpg`} alt={event.title} className="event-image" />
-            <div className="event-details">
-                <h3>{event.title}</h3>
-                <p>Organizer: {event.organizer}</p>
-                <p>Date: {event.date}</p>
-                <p>Time: {event.time}</p>
-                <p>Fee: RS {event.fee}</p>
-                <p>Location: {event.location}</p>
-                {userType === 'coach' ? (
-                    isCompleted ? (
-                        <button className="view-result-btn" onClick={() => navigate('/results')}>View Results</button>
-                    ) : (
-                        <button className="view-registrations-btn" onClick={() => navigate('/registrations', { state: { eventId: event.id } })}>
-                            View Registrations
-                        </button>
-                    )
-                ) : (
-                    isCompleted ? (
-                        isRegistered(event.id) ? (
-                            <button className="view-result-btn" onClick={() => navigate('/results')}>View Result</button>
-                        ) : (
-                            <button className="not-participated-btn">Not Participated</button>
-                        )
-                    ) : (
-                        isRegistered(event.id) ? (
-                            <button className="already-registered-btn">Already Registered</button>
-                        ) : (
-                            <button className="register-btn" onClick={() => handleRegister(event.id)}>Register</button>
-                        )
-                    )
-                )}
-            </div>
-        </div>
-    );
-
     const completedEvents = events.filter(event => !isEventUpcoming(event.date));
     const upcomingEvents = events.filter(event => isEventUpcoming(event.date));
 
@@ -166,18 +129,59 @@ const EventPage = () => {
         <div className="events-container">
             <div className="completed-events">
                 <h2>Completed Events</h2>
+                {error && <p className="error-message">{error}</p>}
                 <div className="event-grid">
-                    {completedEvents.map(event => renderEventCard(event, true))}
+                    {completedEvents.map(event => (
+                        <div key={event.id} className="event-card">
+                    <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} />
+                    <h3>{event.title}</h3>
+                    <p>Organizer: {event.organizer}</p>
+                    <p>Date: {event.date}</p>
+                    <p>Time: {event.time}</p>
+                    <p>Fee: RS {event.fee}</p>
+                    <p>Location: {event.location}</p>
+                    {userType === 'coach' ? (
+                        <button onClick={() => navigate('/results')}>View Results</button>
+                    ) : (
+                        isRegistered(event.id) ? (
+                        <button onClick={() => navigate('/results')}>View Result</button>
+                        ) : (
+                        <button>Not Participated</button>
+                        )
+                    )}
+                    </div>
+                ))}
                 </div>
             </div>
             <div className="upcoming-events">
                 <h2>Upcoming Events</h2>
                 <div className="event-grid">
-                    {upcomingEvents.map(event => renderEventCard(event, false))}
+                {upcomingEvents.map(event => (
+                    <div key={event.id} className="event-card">
+                    <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="event-image" />
+                    <h3>{event.title}</h3>
+                    <p>Organizer: {event.organizer}</p>
+                    <p>Date: {event.date}</p>
+                    <p>Time: {event.time}</p>
+                    <p>Fee: RS {event.fee}</p>
+                    <p>Location: {event.location}</p>
+                    {userType === 'coach' ? (
+                        <button onClick={() => navigate('/registrations', { state: { eventId: event.id } })}>
+                           View Registrations
+                        </button>
+                    ) : (
+                        isRegistered(event.id) ? (
+                        <button>Already Registered</button>
+                        ) : (
+                        <button onClick={() => handleRegister(event.id)}>Register</button>
+                        )
+                    )}
+                    </div>
+                ))}
                 </div>
             </div>
         </div>
-    );
+      );
 };
 
 export default EventPage;

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './profile.css';
-import showPasswordIcon from '../image/show.png';
-import hidePasswordIcon from '../image/hide.png';
 
 const ProfilePage = () => {
     const [profileData, setProfileData] = useState({ firstname: '', lastname: '', email: '', password: '' });
     const [formData, setFormData] = useState({ ...profileData, newPassword: '', confirmPassword: '' });
+    const showPasswordIcon = `${process.env.PUBLIC_URL}/images/show.png`
+    const hidePasswordIcon = `${process.env.PUBLIC_URL}/images/hide.png`
     const [showPassword, setShowPassword] = useState(false);
     const [registrations, setRegistrations] = useState([]);
     const [eventDetails, setEventDetails] = useState({});

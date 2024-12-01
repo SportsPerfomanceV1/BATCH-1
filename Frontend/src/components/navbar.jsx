@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './navbar.css';
 
-const Navbar = ({ loggedIn, isAdmin, onLogout }) => {
+const Navbar = ({ loggedIn, onLogout }) => {
+    const userType = sessionStorage.getItem('userType');
     return (
         <nav className="navbar">
             <div className="navbar-content">
                 <Link to="/home" className="logo">Athletyics</Link>
                 <ul>
-                    {isAdmin ? (
+                    {(userType === 'admin') ? (
                         <>
                             <li><Link to="/admin-dashboard">Dashboard</Link></li>
                             <li><Link to="/admin-events">Events</Link></li>

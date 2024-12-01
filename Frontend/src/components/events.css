@@ -1,3 +1,9 @@
+.events-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
 .completed-events, .upcoming-events {
     background-color: #f5f5f5;
     border-radius: 15px;
@@ -6,18 +12,22 @@
     margin: 30px auto;
     padding: 30px;
 }
-
 .completed-events h2, .upcoming-events h2 {
     color: #333;
     margin-bottom: 20px;
 }
+.error-message {
+    color: #dc3545;
+    margin-bottom: 10px;
+}
 .event-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 10px;
 }
 .event-card {
     background-color: white;
+    border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -26,41 +36,35 @@
 .event-card:hover {
     transform: translateY(-3px);
 }
-.event-image {
+.event-card img {
     width: 100%;
     border-radius: 8px;
-    border-radius: 8px;
+    margin-bottom: 10px;
+    object-fit: cover;
 }
-.event-details {
-    padding: 20px;
-}
-.event-details h3 {
+.event-card h3 {
     margin-top: 0;
     color: #333;
 }
-.event-details p {
+.event-card p {
     margin: 7px 0px;
     color: black;
 }
-.view-result-btn,
-.not-participated-btn,
-.already-registered-btn,
-.register-btn,
-.view-registrations-btn {
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin-top: 15px;
-}
-.view-result-btn:hover,
-.not-participated-btn:hover,
-.already-registered-btn:hover,
-.register-btn:hover,
-.view-registrations-btn:hover {
+.event-card button {
     background-color: black;
+    font-size: 16px;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 7px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
-
-@media (max-width: 768px) {
+.event-card button:hover{
+    background-color: #555;
+}
+@media (max-width: 600px) {
     .event-grid {
         grid-template-columns: 1fr;
     }

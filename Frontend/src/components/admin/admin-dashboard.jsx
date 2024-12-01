@@ -10,11 +10,11 @@ const Dashboard = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const images = [
-        '/images/cricket.jpg', 
-        '/images/football.jpg', 
-        '/images/basketball.jpg', 
-        '/images/marathon.jpg', 
-        '/images/baseball.jpg'
+        '/images/slideshow/cricket.webp', 
+        '/images/slideshow/football.webp', 
+        '/images/slideshow/basketball.webp', 
+        '/images/slideshow/marathon.webp', 
+        '/images/slideshow/baseball.webp'
     ];
     const firstName =sessionStorage.getItem('firstName');
 
@@ -74,7 +74,7 @@ const Dashboard = () => {
 
     const renderEventCard = (event) => (
         <div className="event-card" key={event.id}>
-            <img src={`${process.env.PUBLIC_URL}/images/${event.id}.jpg`} alt={event.title} className="event-picture" />
+            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="event-picture" />
             <h3>{event.title}</h3>
             <ul>
                 <li><strong>Organizer :</strong> {event.organizer}</li>

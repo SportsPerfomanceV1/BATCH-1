@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "react-router-dom": "^6.27.0"
-  },
-  "scripts": {
-    "start": "node your-script.js"
-}
-}

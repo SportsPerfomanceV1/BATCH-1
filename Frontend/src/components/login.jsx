@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './login-signup.css';
 import { Link, useNavigate } from 'react-router-dom';
-import showPasswordIcon from '../image/show.png';
-import hidePasswordIcon from '../image/hide.png';
 
 const LoginPage = ({ setLoggedIn }) => {
     const navigate = useNavigate();
@@ -22,6 +20,8 @@ const LoginPage = ({ setLoggedIn }) => {
         });
     };
 
+    const showPasswordIcon = `${process.env.PUBLIC_URL}/images/show.png`
+    const hidePasswordIcon = `${process.env.PUBLIC_URL}/images/hide.png`
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };

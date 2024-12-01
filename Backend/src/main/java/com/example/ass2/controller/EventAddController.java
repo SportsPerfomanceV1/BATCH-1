@@ -28,7 +28,6 @@ public class EventAddController {
             @RequestParam("file") MultipartFile file) {
 
         try {
-            // Save file to local storage
             String uploadDir = "uploads/";
             File directory = new File(uploadDir);
             if (!directory.exists()) {
@@ -37,7 +36,6 @@ public class EventAddController {
             String filePath = uploadDir + file.getOriginalFilename();
             file.transferTo(new File(filePath));
 
-            // Save event data to database
             Event event = new Event();
             event.setEventId(Long.valueOf(eventId));
             event.setDate(date);

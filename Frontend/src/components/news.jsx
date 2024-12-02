@@ -34,7 +34,7 @@ const NewsPage = () => {
         const isCompleted = daysUntilEvent === null;
         const newsHeading = isCompleted
             ? `${event.title} is completed`
-            : `${event.title} is upcoming in ${daysUntilEvent} days left`;
+            : `${event.title} is upcoming in ${daysUntilEvent} days`;
 
         return (
             <div key={event.id} className="news-card">

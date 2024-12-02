@@ -118,7 +118,7 @@ const ResultPage = () => {
                         <p>{getPlacementMessage(parseInt(userResult.result))}</p>
                     </>
                     )}
-                    {userType === 'coach' ? (
+                    
                         <table>
                             <thead>
                                 <tr>
@@ -137,18 +137,7 @@ const ResultPage = () => {
                                 ))}
                             </tbody>
                         </table>
-                    ) : (
-                        parseInt(userResult.result) <= 3 && (
-                            <div className="podium">
-                                <img src="/images/podium.png" alt="Podium" />
-                                <div className="podium-names">
-                                    <span className="second">{sortedResults[1]?.athleteId}</span>
-                                    <span className="first">{sortedResults[0]?.athleteId}</span>
-                                    <span className="third">{sortedResults[2]?.athleteId}</span>
-                                </div>
-                            </div>
-                        )
-                    )}
+                    
                     <button onClick={onClose}>Close</button>
                 </div>
             </div>

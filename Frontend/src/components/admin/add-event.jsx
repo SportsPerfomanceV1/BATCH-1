@@ -12,9 +12,9 @@ const AdminEventsPage = () => {
         date: '',
         time: '',
         fee: '',
-        location: '',
-        image_url: ''
+        location: ''
     });
+    const [selectedFile, setSelectedFile] = useState(null);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -39,12 +39,24 @@ const AdminEventsPage = () => {
     const handleCreateEvent = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:8080/api/events/create', newEvent);
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+            formData.append('eventDetails', JSON.stringify(newEvent));
+
+            await axios.post('http://localhost:8080/api/events/create', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
             setShowCreateForm(false);
             fetchEvents();
         } catch (error) {
             setError('Failed to create event. Please try again.');
         }
+    };
+
+    const handleFileChange = (e) => {
+        setSelectedFile(e.target.files[0]);
     };
 
     const renderEventCard = (event) => (
@@ -62,7 +74,7 @@ const AdminEventsPage = () => {
                         View Registrations
                     </button>
                 ) : (
-                    <button onClick={() => navigate('/results', { state: { eventId: event.id } })}>
+                    <button onClick={() => navigate('/admin-results', { state: { eventId: event.id } })}>
                         View Results
                     </button>
                 )}
@@ -122,10 +134,9 @@ const AdminEventsPage = () => {
                             required
                         />
                         <input
-                            type="text"
-                            placeholder="Image URL"
-                            value={newEvent.image_url}
-                            onChange={(e) => setNewEvent({...newEvent, image_url: e.target.value})}
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
                             required
                         />
                         <button type="submit">Create Event</button>

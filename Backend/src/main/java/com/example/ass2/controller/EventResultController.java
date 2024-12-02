@@ -29,4 +29,9 @@ public class EventResultController {
     public EventResult publishEventResult(@RequestBody EventResult eventResult) {
         return eventResultService.publishEventResult(eventResult);
     }
+
+    @PostMapping("/{eventId}/publish")
+    public List<EventResult> publishEventResults(@PathVariable Long eventId) {
+        return eventResultService.publishEventResults(eventId);
+    }
 }

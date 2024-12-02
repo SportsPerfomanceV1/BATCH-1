@@ -31,21 +31,6 @@ const AdminResultsPage = () => {
         }
     };
 
-    const handleResultChange = (registrationId, result) => {
-        setRegistrations(registrations.map(reg => 
-            reg.id === registrationId ? { ...reg, result } : reg
-        ));
-    };
-
-    const handleSaveResults = async () => {
-        try {
-            await axios.post(`http://localhost:8080/api/results/${selectedEvent.id}`, registrations);
-            setError('Results saved successfully.');
-        } catch (error) {
-            setError('Failed to save results. Please try again.');
-        }
-    };
-
     const handlePublishResults = async () => {
         try {
             await axios.post(`http://localhost:8080/api/results/${selectedEvent.id}/publish`);
@@ -55,11 +40,6 @@ const AdminResultsPage = () => {
         } catch (error) {
             setError('Failed to publish results. Please try again.');
         }
-    };
-
-    const handleClearForm = () => {
-        setSelectedEvent(null);
-        setRegistrations([]);
     };
 
     const renderEventCard = (event) => (
@@ -91,7 +71,6 @@ const AdminResultsPage = () => {
                         <thead>
                             <tr>
                                 <th>Athlete ID</th>
-                                <th>Result</th>
                                 <th>Published</th>
                             </tr>
                         </thead>
@@ -99,22 +78,14 @@ const AdminResultsPage = () => {
                             {registrations.map(reg => (
                                 <tr key={reg.id}>
                                     <td>{reg.athleteId}</td>
-                                    <td>
-                                        <input 
-                                            type="text" 
-                                            value={reg.result || ''} 
-                                            onChange={(e) => handleResultChange(reg.id, e.target.value)}
-                                        />
-                                    </td>
                                     <td>{reg.published ? 'Yes' : 'No'}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                     <div className="button-group">
-                        <button onClick={handleSaveResults}>Save Results</button>
                         <button onClick={handlePublishResults}>Publish Results</button>
-                        <button onClick={handleClearForm}>Clear Form</button>
+                        <button onClick={() => setSelectedEvent(null)}>Close</button>
                     </div>
                 </div>
             )}

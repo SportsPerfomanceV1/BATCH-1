@@ -186,14 +186,14 @@ const HomePage = () => {
             <div className="hero-section">
                 {renderSlideshow()}
             </div>
-
+            
             <div className="content-section">
                 <div className="section-container">
                     <div className="events-section">
                         <h2>Upcoming Events</h2>
                         <div className="event-grid">
                             {upcomingEvents.length > 0 ? (
-                                upcomingEvents.map((event) => renderEventCard(event, ))
+                                upcomingEvents.map((event) => renderEventCard(event))
                             ) : (
                                 <p className="no-events">
                                     No upcoming events available at the moment. Check back soon for exciting new events!

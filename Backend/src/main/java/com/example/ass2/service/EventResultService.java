@@ -26,4 +26,10 @@ public class EventResultService {
     public List<EventResult> getResultsByAthleteId(Long athleteId){
         return eventResultRepository.findByAthleteId(athleteId);
     }
+
+    public List<EventResult> publishEventResults(Long eventId){
+        List<EventResult> results = eventResultRepository.findByEventId(eventId);
+        results.forEach(result -> result.setPublished(true));
+        return eventResultRepository.saveAll(results);
+    }
 }

@@ -1,14 +1,15 @@
+/* /components/results.css */
 .results-container {
     background-color: #f5f5f5;
     border-radius: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 25px 25px 70px 25px;
+    margin: 20px auto;
+    position: relative;
     max-width: 1200px;
-    margin: 30px auto;
-    padding: 30px;
 }
 .results-container h2 {
     color: #333;
-    margin-bottom: 20px;
 }
 .error-message {
     color: #dc3545;
@@ -21,44 +22,46 @@
 }
 .result-card {
     background-color: white;
-    border-radius: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    transition: transform 0.3s ease;
+    padding: 15px 15px 50px 15px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
 }
 .result-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 .result-card img {
     width: 100%;
     border-radius: 8px;
-    margin-bottom: 10px;
+    object-fit: cover;
 }
 .result-card h3 {
-    margin-top: 0;
     color: #333;
+    margin: 5px 0 15px 5px;
 }
 .result-card p {
-    margin: 7px 0px;
-    color: black;
+    margin: 5px 0 5px 7px;
+    color: #333;
 }
-.result-card button,
-.event-card button,
-.result-popup button {
+.result-card button {
     background-color: black;
-    font-size: 16px;
     color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 7px 0;
+    font-size: 15px;
     border-radius: 5px;
+    padding: 10px 20px;
+    border: none;
     cursor: pointer;
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
     transition: background-color 0.3s ease;
 }
-.result-card button:hover,
-.event-card button:hover,
-.result-popup button:hover {
-    background-color: #555;
+.result-card button:hover {
+    background-color: #333;
 }
 .not-published {
     color: #dc3545;
@@ -83,6 +86,8 @@
     max-width: 500px;
     width: 100%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding-bottom: 70px;
 }
 .result-popup-content img {
     width: 100%;
@@ -108,6 +113,22 @@
 }
 .result-popup-content th {
     background-color: #f2f2f2;
+}
+.result-popup-content button {
+    background-color: black;
+    color: white;
+    font-size: 15px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    transition: background-color 0.3s ease;
+}
+.result-popup-content button:hover {
+    background-color: #333;
 }
 .podium {
     text-align: center;

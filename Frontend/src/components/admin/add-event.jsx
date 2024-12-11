@@ -1,3 +1,4 @@
+/* /components/admin/add-event.jsx */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -60,15 +61,15 @@ const AdminEventsPage = () => {
     };
 
     const renderEventCard = (event) => (
-        <div key={event.id} className="event-card">
-            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="event-image" />
-            <div className="event-details">
+        <div key={event.id} className="add-event-card">
+            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="add-event-img" />
+            <div className="add-event-details">
                 <h3>{event.title}</h3>
-                <p>Organizer: {event.organizer}</p>
-                <p>Date: {event.date}</p>
-                <p>Time: {event.time}</p>
-                <p>Fee: RS {event.fee}</p>
-                <p>Location: {event.location}</p>
+                <p><strong>Organizer:</strong> {event.organizer}</p>
+                <p><strong>Date:</strong> {event.date}</p>
+                <p><strong>Time:</strong> {event.time}</p>
+                <p><strong>Fee:</strong> RS {event.fee}</p>
+                <p><strong>Location</strong>: {event.location}</p>
                 {isEventUpcoming(event.date) ? (
                     <button onClick={() => navigate('/registrations', { state: { eventId: event.id } })}>
                         View Registrations
@@ -83,16 +84,17 @@ const AdminEventsPage = () => {
     );
 
     return (
-        <div className="admin-events-container">
+        <div className="add-events-container">
             <h2>Admin Events Page</h2>
             <button className="create-event-btn" onClick={() => setShowCreateForm(true)}>Create Event</button>
             {error && <p className="error-message">{error}</p>}
-            <div className="events-list">
+            <div className="add-events-list">
                 {events.map(renderEventCard)}
             </div>
             {showCreateForm && (
                 <div className="create-event-popup">
                     <form onSubmit={handleCreateEvent}>
+                        <h2>Event creation form</h2>
                         <input
                             type="text"
                             placeholder="Title"
@@ -139,8 +141,10 @@ const AdminEventsPage = () => {
                             onChange={handleFileChange}
                             required
                         />
-                        <button type="submit">Create Event</button>
-                        <button type="button" onClick={() => setShowCreateForm(false)}>Cancel</button>
+                        <div className="event-popup-btn-group">
+                            <button type="submit">Create Event</button>
+                            <button type="button" onClick={() => setShowCreateForm(false)}>Cancel</button>
+                        </div>
                     </form>
                 </div>
             )}

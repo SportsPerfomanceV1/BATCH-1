@@ -9,7 +9,6 @@ public class SignupRequest {
     // Getters and Setters
     private String firstname;
     private String lastname;
-    private String middlename; // optional
     private String username;
     private String password;
     private String email;

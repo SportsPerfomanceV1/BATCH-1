@@ -1,3 +1,4 @@
+/* components/PasswordStrengthMeter.jsx */
 import React from 'react';
 import './PasswordStrengthMeter.css';
 

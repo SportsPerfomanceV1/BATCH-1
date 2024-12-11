@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EventResultService {
@@ -14,22 +13,15 @@ public class EventResultService {
     @Autowired
     private EventResultRepository eventResultRepository;
 
-    public List<EventResult> getPublishedResultsByEventId(Long eventId) {
+    public List<EventResult> getPublishedResultsByEventId(int eventId) {
         return eventResultRepository.findByEventIdAndPublishedTrue(eventId);
     }
 
-    public EventResult publishEventResult(EventResult eventResult) {
-        eventResult.setPublished(true);
-        return eventResultRepository.save(eventResult);
-    }
-
-    public List<EventResult> getResultsByAthleteId(Long athleteId){
+    public List<EventResult> getResultsByAthleteId(int athleteId){
         return eventResultRepository.findByAthleteId(athleteId);
     }
 
-    public List<EventResult> publishEventResults(Long eventId){
-        List<EventResult> results = eventResultRepository.findByEventId(eventId);
-        results.forEach(result -> result.setPublished(true));
-        return eventResultRepository.saveAll(results);
+    public List<EventResult> saveResults(List<EventResult> eventResult) {
+        return eventResultRepository.saveAll(eventResult);
     }
 }

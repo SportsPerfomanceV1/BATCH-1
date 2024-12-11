@@ -1,11 +1,7 @@
 package com.example.ass2.controller;
 
-import com.example.ass2.model.Athlete;
-import com.example.ass2.model.Coach;
 import com.example.ass2.model.Event;
-import com.example.ass2.service.CoachService;
 import com.example.ass2.service.EventService;
-import com.example.ass2.service.AthleteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,12 +23,6 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
-    @Autowired
-    private AthleteService athleteService;
-
-    @Autowired
-    private CoachService coachService;
-
     //Get all events details
     @GetMapping("/events")
     public List<Event> getEvents() {
@@ -41,10 +31,11 @@ public class EventController {
 
     // Get event details by eventId
     @GetMapping("/events/{id}")
-    public Event getEventById(@PathVariable Long id) {
+    public Event getEventById(@PathVariable int id) {
         return eventService.getEventById(id).orElseThrow(() -> new RuntimeException("Event not found"));
     }
 
+    // Create events with image as file & details in json format
     @PostMapping("/events/create")
     public ResponseEntity<Event> createEvent(@RequestParam("file") MultipartFile file,
                                              @RequestParam("eventDetails") String eventDetailsJson) {
@@ -53,7 +44,7 @@ public class EventController {
             Event event = mapper.readValue(eventDetailsJson, Event.class);
 
             Event savedEvent = eventService.saveEvent(event);
-            String uploadDir = "C:/Users/vishw/Documents/Infosys Internship Project/Sports Performance Application/Frontend/public/event_pics";
+            String uploadDir = "C:/Users/vishw/Projects/Infosys Internship Project/Sports Performance Application/Frontend/public/event_pics";
 
             String fileName = savedEvent.getId() + ".webp";
             Path uploadPath = Paths.get(uploadDir);
@@ -65,7 +56,7 @@ public class EventController {
             Files.copy(file.getInputStream(), filePath);
 
             String imageUrl = "/public/event_pics/" + fileName;
-            savedEvent.setImageUrl(imageUrl);
+            savedEvent.setImage_url(imageUrl);
 
             Event updatedEvent = eventService.updateEvent(savedEvent.getId(), savedEvent);
             return ResponseEntity.ok(updatedEvent);
@@ -74,38 +65,15 @@ public class EventController {
         }
     }
 
-    //Get events of coach by username
-    @GetMapping("/athletes/{username}")
-    public ResponseEntity<Athlete> getAthleteByUsername(@PathVariable String username) {
-        Athlete athlete = athleteService.findByUsername(username);
-        if (athlete != null) {
-            return ResponseEntity.ok(athlete);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }
-
-    //Get events of coach by username
-    @GetMapping("/coach/{username}")
-    public ResponseEntity<Coach> getCoachByUsername(@PathVariable String username){
-        Coach coach = coachService.findByUsername(username);
-        if (coach != null){
-            return ResponseEntity.ok(coach);
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }
-
     // Update event details by eventId
     @PutMapping("/events/update/{id}")
-    public Event updateEvent(@PathVariable Long id, @RequestBody Event eventDetails) {
+    public Event updateEvent(@PathVariable int id, @RequestBody Event eventDetails) {
         return eventService.updateEvent(id, eventDetails);
     }
 
     // Delete event details by eventId
     @DeleteMapping("/events/delete/{id}")
-    public void deleteEvent(@PathVariable Long id) {
+    public void deleteEvent(@PathVariable int id) {
         eventService.deleteEvent(id);
     }
 }

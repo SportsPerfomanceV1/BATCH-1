@@ -14,9 +14,9 @@ public class EventResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long eventId;
-    private Long athleteId;
+    private int id;
+    private int eventId;
+    private int athleteId;
     private String result;
     private boolean published;
 

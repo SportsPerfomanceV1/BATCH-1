@@ -15,25 +15,30 @@ public class RegistrationService {
     private RegistrationRepository registrationRepository;
 
     // Method to register an athlete
-    public Registration registerAthlete(Long eventId, Long athleteId) {
+    public Registration registerAthlete(int eventId, int athleteId) {
         Registration registration = new Registration();
         registration.setEventId(eventId);
         registration.setAthleteId(athleteId);
-        registration.setRegistrationDate(LocalDate.now()); // Set current date
-        registration.setStatus("Pending"); // Set status to pending
-        return registrationRepository.save(registration); // Save to database
+        registration.setRegistrationDate(LocalDate.now());
+        registration.setStatus("Pending");
+        return registrationRepository.save(registration);
     }
 
-    // New method to find registrations by athlete ID
-    public List<Registration> findByAthleteId(Long athleteId) {
-        return registrationRepository.findByAthleteId(athleteId); // Use repository method to fetch registrations
+    public List<Registration> findByAthleteId(int athleteId) { return registrationRepository.findByAthleteId(athleteId); }
+
+    public List<Registration> findByAthleteIdAndStatus(int athleteId, String status) {
+        return registrationRepository.findByAthleteIdAndStatus(athleteId, status);
     }
 
-    public List<Registration> findByEventId(Long eventId) {
+    public List<Registration> findByEventId(int eventId) {
         return registrationRepository.findByEventId(eventId);
     }
 
-    public Registration updateRegistrationStatus(Long registrationId, String status) {
+    public List<Registration> findByEventIdAndStatus(int eventId, String status) {
+        return registrationRepository.findByEventIdAndStatus(eventId, status);
+    }
+
+    public Registration updateRegistrationStatus(int registrationId, String status) {
         Registration registration = registrationRepository.findById(registrationId)
                 .orElseThrow(() -> new RuntimeException("Registration not found"));
         registration.setStatus(status);

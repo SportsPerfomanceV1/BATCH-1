@@ -1,3 +1,4 @@
+/* /components/home.jsx */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,8 +12,6 @@ const HomePage = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
     const images = [
         '/images/slideshow/cricket.webp', 
         '/images/slideshow/football.webp', 
@@ -22,12 +21,10 @@ const HomePage = () => {
     ];
     const firstName =sessionStorage.getItem('firstName');
 
-    // Slideshow
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentSlide((prevSlide) => (prevSlide + 1) % images.length);
         }, 3000);
-
         return () => clearInterval(interval);
     }, [images.length]);
     
@@ -100,7 +97,7 @@ const HomePage = () => {
             if (athleteId) {
                 try {
                     const response = await axios.get(`http://localhost:8080/api/registrations?athleteId=${athleteId}`);
-                    setUserRegistrations(response.data);
+                    setUserRegistrations(Array.isArray(response.data) ? response.data : []);
                 } catch (error) {
                     console.error('Error fetching user registrations:', error);
                     setError('Failed to fetch registrations. Please try again later.');
@@ -117,13 +114,17 @@ const HomePage = () => {
     };
 
     const upcomingEvents = events
-        .filter((event) => isEventUpcoming(event.date) && !userRegistrations.some((reg) => reg.eventId === event.id))
+        .filter((event) => isEventUpcoming(event.date) && (Array.isArray(userRegistrations) ? 
+        !userRegistrations.some((reg) => reg.eventId === event.id) : 
+        true
+      )
+    )
         .slice(0, 3);
 
-    const registeredEvents = userRegistrations.map((registration) => {
-        const event = events.find((e) => e.id === registration.eventId);
-        return event ? { ...event, registrationStatus: registration.status } : null;
-    }).filter(Boolean);
+        const registeredEvents = Array.isArray(userRegistrations) ? userRegistrations.map((registration) => {
+            const event = events.find((e) => e.id === registration.eventId);
+            return event ? { ...event, registrationStatus: registration.status } : null;
+        }).filter(Boolean) : [];
 
     const recentlyCompletedEvent = registeredEvents
         .filter((event) => !isEventUpcoming(event.date))
@@ -131,23 +132,21 @@ const HomePage = () => {
 
     const upcomingRegisteredEvents = registeredEvents
         .filter((event) => isEventUpcoming(event.date))
-        .slice(0, 2);
+        .slice(0, 3);
 
     const renderEventCard = (event, isRegistered = false) => (
-        <div className="event-card" key={event.id}>
-            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="event-picture" />
+        <div className="home-event-card" key={event.id}>
+            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="home-event-img"/>
             <h3>{event.title}</h3>
-            <ul>
-                <li><strong>Organizer :</strong> {event.organizer}</li>
-                <li><strong>Date :</strong> {event.date}</li>
-                <li><strong>Location :</strong> {event.location}</li>
-                {isRegistered ? (
-                    <li><strong>Status :</strong> <span className={`status-${event.registrationStatus.toLowerCase()}`}>{event.registrationStatus}</span></li>
-                ) : (
-                    <li><strong>Fees :</strong> {event.fee}</li>
-                )}
-            </ul>
-            <button className="view-event-btn" onClick={() => navigate('/events')}>View Event</button>
+            <p><strong>Organizer:</strong> {event.organizer}</p>
+            <p><strong>Date:</strong> {event.date}</p>
+            <p><strong>Location:</strong> {event.location}</p>
+            {isRegistered ? (
+                <p><strong>Status:</strong> <span className={`status-${event.registrationStatus.toLowerCase()}`}>{event.registrationStatus}</span></p>
+            ) : (
+                <p><strong>Fees:</strong> {event.fee}</p>
+            )}
+            <button className="home-view-event-btn" onClick={() => navigate('/events')}>View Event</button>
         </div>
     );
 
@@ -163,19 +162,19 @@ const HomePage = () => {
     };
 
     const renderSlideshow = () => (
-        <div className="slideshow">
+        <div className="home-slideshow">
             {images.map((image, index) => (
                 <img
                     key={index}
                     src={image}
                     alt={`Slide ${index + 1}`}
-                    className={`slideshow-image ${index === currentSlide ? 'fade' : ''}`}
+                    className={`home-slideshow-image ${index === currentSlide ? 'fade' : ''}`}
                     style={{ opacity: index === currentSlide ? 3 : 0 }}
                 />
             ))}
-            <div className="slideshow-overlay">
+            <div className="home-slideshow-overlay">
                 <h1>Good {getTimeofDay()}, {firstName}!</h1>
-                <p className='welcome-msg'>Welcome to Athelytics,</p>
+                <p>Welcome to Athelytics,</p>
                 <p>Your one-stop destination for sports and events</p>
             </div>
         </div>
@@ -183,45 +182,42 @@ const HomePage = () => {
 
     return (
         <div className="home-page">
-            <div className="hero-section">
+            <div className="home-hero-section">
                 {renderSlideshow()}
             </div>
-            
-            <div className="content-section">
-                <div className="section-container">
-                    <div className="events-section">
-                        <h2>Upcoming Events</h2>
-                        <div className="event-grid">
-                            {upcomingEvents.length > 0 ? (
-                                upcomingEvents.map((event) => renderEventCard(event))
-                            ) : (
-                                <p className="no-events">
-                                    No upcoming events available at the moment. Check back soon for exciting new events!
-                                </p>
-                            )}
-                        </div>
-                        <Link to="/events" className="view-all-btn">View all events</Link>
-                    </div>
-                    {sessionStorage.getItem('userType') === 'athlete' && (
-                    <div className="events-section">
-                        <h2>Your Registered Events</h2>
-                        <div className="event-grid">
-                            {recentlyCompletedEvent.concat(upcomingRegisteredEvents).length > 0 ? (
-                                <>
-                                    {recentlyCompletedEvent.map((event) => renderEventCard(event, true))}
-                                    {upcomingRegisteredEvents.map((event) => renderEventCard(event, true))}
-                                </>
-                            ) : (
-                                <p className="no-events">
-                                    You haven't registered for any events yet. Explore our upcoming events and join the excitement!
-                                </p>
-                            )}
-                        </div>
-                        <Link to="/events" className="view-all-btn">View all events</Link>
-                    </div>
+
+            <div className="home-events-section">
+                {error && <p className="home-error-message">{error}</p>}
+                <h2>Upcoming Events</h2>
+                <div className="home-event-grid">
+                    {upcomingEvents.length > 0 ? (
+                        upcomingEvents.map((event) => renderEventCard(event))
+                    ) : (
+                        <p className="home-no-events">
+                            No upcoming events available at the moment. Check back soon for exciting new events!
+                        </p>
                     )}
                 </div>
+                <Link to="/events" className="home-view-all-btn">View more events</Link>
             </div>
+            {sessionStorage.getItem('userType') === 'athlete' && (
+                <div className="home-events-section">
+                    <h2>Your Registered Events</h2>
+                    <div className="home-event-grid">
+                        {recentlyCompletedEvent.concat(upcomingRegisteredEvents).length > 0 ? (
+                            <>
+                                {recentlyCompletedEvent.map((event) => renderEventCard(event, true))}
+                                {upcomingRegisteredEvents.map((event) => renderEventCard(event, true))}
+                            </>
+                        ) : (
+                            <p className="home-no-events">
+                                You haven't registered for any events yet. Explore our upcoming events and join the excitement!
+                            </p>
+                        )}
+                    </div>
+                    <Link to="/events" className="home-view-all-btn">View more events</Link>
+                </div>
+            )}
         </div>
     );
 };

@@ -1,3 +1,4 @@
+/* /components/results.jsx */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -145,23 +146,21 @@ const ResultPage = () => {
     };
 
     const renderEventCard = (event) => (
-        <div key={event.id} className="event-card">
-            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="event-image" />
-            <div className="event-details">
-                <h3>{event.title}</h3>
-                <p>Organizer: {event.organizer}</p>
-                <p>Date: {event.date}</p>
-                <p>Time: {event.time}</p>
-                <p>Fee: RS {event.fee}</p>
-                <p>Location: {event.location}</p>
-                <button onClick={() => handleAllViewResult(event.eventId || event.eventId)}>View Results</button>
-            </div>
+        <div key={event.id} className="result-card">
+            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title}/>
+            <h3>{event.title}</h3>
+            <p><strong>Organizer</strong>: {event.organizer}</p>
+            <p><strong>Date:</strong> {event.date}</p>
+            <p><strong>Time:</strong> {event.time}</p>
+            <p><strong>Fee:</strong> RS {event.fee}</p>
+            <p><strong>Location:</strong> {event.location}</p>
+            <button onClick={() => handleAllViewResult(event.eventId || event.eventId)}>View Results</button>
         </div>
     );
 
     return (
         <div className="results-container">
-            <h2>{userType === 'coach' ? 'Event Results' : 'Your Results'}</h2>
+            <h2>{userType === 'coach' || 'admin' ? 'Event Results' : 'Your Results'}</h2>
             {error && <p className="error-message">{error}</p>}
             {userType === 'athlete' ? (
                 <div className="results-grid">
@@ -169,7 +168,7 @@ const ResultPage = () => {
                         const event = events[result.eventId];
                         return (
                             <div key={result.id} className="result-card">
-                                <img src={`${process.env.PUBLIC_URL}/event_pics/${event?.id}.webp`} alt={event?.title} className="event-image" />
+                                <img src={`${process.env.PUBLIC_URL}/event_pics/${event?.id}.webp`} alt={event?.title}/>
                                 <h3>{event?.title}</h3>
                                 <p><strong>Organizer:</strong> {event?.organizer}</p>
                                 <p><strong>Date:</strong> {event?.date}</p>

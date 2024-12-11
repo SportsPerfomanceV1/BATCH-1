@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface RegistrationRepository extends JpaRepository<Registration, Long> {
-    // Custom query methods (if needed)
-    List<Registration> findByAthleteId(Long athleteId);
-
-    List<Registration> findByEventId(Long eventId);
+public interface RegistrationRepository extends JpaRepository<Registration, Integer> {
+    List<Registration> findByAthleteId(int athleteId);
+    List<Registration> findByEventId(int eventId);
+    List<Registration> findByAthleteIdAndStatus(int athleteId, String status);
+    List<Registration> findByEventIdAndStatus(int eventId, String status);
 }

@@ -1,76 +1,83 @@
-.admin-events-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+/* /components/admin/add-event.css */
+.add-events-container {
+    background-color: #f5f5f5;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 1100px;
 }
-.admin-events-container h2 {
+.add-events-container h2 {
     color: #333;
-    margin-bottom: 20px;
-}
-.create-event-btn {
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-bottom: 20px;
-    transition: background-color 0.3s ease;
-}
-.create-event-btn:hover {
-    background-color: #444;
 }
 .error-message {
     color: #dc3545;
     margin-bottom: 10px;
 }
-.events-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-.event-card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: calc(33.333% - 20px);
-    transition: transform 0.3s ease;
-}
-.event-card:hover {
-    transform: translateY(-5px);
-}
-.event-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-.event-details {
-    padding: 15px;
-}
-.event-details h3 {
-    margin-top: 0;
-    color: #333;
-    font-size: large;
-}
-.event-details p {
-    margin: 8px 0;
-    color: #666;
-}
-.event-details button {
+.create-event-btn {
     background-color: black;
     color: white;
+    font-size: medium;
+    border-radius: 5px;
+    padding: 10px 20px;
     border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
     cursor: pointer;
-    margin-top: 10px;
     transition: background-color 0.3s ease;
 }
-.event-details button:hover {
-    background-color: #444;
+.create-event-btn:hover {
+    background-color: #333;
 }
+.add-event-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-top: 30px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+.add-event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.add-event-img {
+    width: 300px;
+    height: 200px;
+    border-radius: 8px;
+    margin-right: 20px;
+    object-fit: cover;
+}
+.add-event-details {
+    flex: 1;
+}
+.add-event-details h3 {
+    margin-top: 0;
+    color: #333;
+}
+.add-event-details p {
+    margin: 5px 0 0 3px;
+    color: #333;
+}
+.add-event-details button {
+    background-color: black;
+    color: white;
+    font-size: 15px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    transition: background-color 0.3s ease;
+}
+.add-event-details button:hover {
+    background-color: #333;
+}
+
 .create-event-popup {
     position: fixed;
     top: 0;
@@ -87,12 +94,12 @@
     background-color: white;
     padding: 30px;
     border-radius: 10px;
-    width: 400px;
+    width: 450px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 .create-event-popup input {
-    width: 100%;
-    padding: 8px;
+    width: 95%;
+    padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -117,25 +124,46 @@
     transition: background-color 0.3s ease;
 }
 .create-event-popup input[type="file"]::file-selector-button:hover {
-    background-color: #444;
+    background-color: #333;
 }
-.create-event-popup button {
+.event-popup-btn-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.event-popup-btn-group button {
+    font-size: medium;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.event-popup-btn-group button[type="submit"] {
     background-color: black;
     color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 4px;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
 }
-.create-event-popup button:hover {
-    background-color: #444;
+.event-popup-btn-group button[type="submit"]:hover {
+    background-color: #333;
+}
+.event-popup-btn-group button[type="button"] {
+    background-color: #e5e5e5;
+    color: black;
+    border-color: #ccc;
+    border-style: solid;
+}
+.event-popup-btn-group button[type="button"]:hover {
+    background-color: #ccc;
 }
 
 @media (max-width: 768px) {
-    .event-card {
+    .add-event-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .add-event-img {
         width: 100%;
+        height: 200px;
+        margin-right: 0;
+        margin-bottom: 15px;
     }
 }

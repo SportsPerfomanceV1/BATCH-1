@@ -15,6 +15,7 @@ public class RegistrationController {
     @Autowired
     private RegistrationService registrationService;
 
+    // Register to event by Athlete
     @PostMapping
     public ResponseEntity<String> registerAthlete(@RequestBody Registration registrationRequest) {
         Registration registration = registrationService.registerAthlete(
@@ -23,27 +24,46 @@ public class RegistrationController {
         return ResponseEntity.ok("Registration successful: " + registration.getRegistrationId());
     }
 
+    // Fetch all Registrations of Athlete by Id
     @GetMapping
-    public ResponseEntity<List<Registration>> getRegistrationsByAthleteId(@RequestParam Long athleteId) {
-        List<Registration> registrations = registrationService.findByAthleteId(athleteId);
-        if (registrations.isEmpty()) {
-            return ResponseEntity.noContent().build(); // Return 204 No Content if no registrations found
+    public ResponseEntity<List<Registration>> getRegistrationsByAthleteId(
+            @RequestParam int athleteId,
+            @RequestParam (required=false) String status
+    ) {
+        List<Registration> registrations;
+        if (status != null && !status.isEmpty()) {
+            registrations = registrationService.findByAthleteIdAndStatus(athleteId, status);
+        } else {
+            registrations = registrationService.findByAthleteId(athleteId);
         }
-        return ResponseEntity.ok(registrations); // Return 200 OK with the list of registrations
-    }
-
-    @GetMapping("/event/{eventId}")
-    public ResponseEntity<List<Registration>> getRegistrationsByEventId(@PathVariable Long eventId) {
-        List<Registration> registrations = registrationService.findByEventId(eventId);
-        if (registrations.isEmpty()){
+        if (registrations.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(registrations);
     }
 
+    // Fetch all Registrations of Event by Id
+    @GetMapping("/event/{eventId}")
+    public ResponseEntity<List<Registration>> getRegistrationsByEventId(
+            @PathVariable int eventId,
+            @RequestParam (required=false) String status
+    ) {
+        List<Registration> registrations;
+        if (status != null && !status.isEmpty()) {
+            registrations = registrationService.findByEventIdAndStatus(eventId, status);
+        } else {
+            registrations = registrationService.findByEventId(eventId);
+        }
+        if (registrations.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(registrations);
+    }
+
+    // Update Registration status
     @PatchMapping("/{registrationId}/status")
     public ResponseEntity<String> updateRegistrationStatus(
-            @PathVariable Long registrationId,
+            @PathVariable int registrationId,
             @RequestParam String status) {
         try {
             Registration updatedRegistration = registrationService.updateRegistrationStatus(registrationId, status);

@@ -1,7 +1,9 @@
 package com.example.ass2.service;
 
+import com.example.ass2.model.Admin;
 import com.example.ass2.model.Athlete;
 import com.example.ass2.model.Coach;
+import com.example.ass2.repository.AdminRepository;
 import com.example.ass2.repository.AthleteRepository;
 import com.example.ass2.repository.CoachRepository;
 import com.example.ass2.service.UserService;
@@ -16,31 +18,34 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private AthleteRepository athleteRepository;
-
     @Autowired
     private CoachRepository coachRepository;
+    @Autowired
+    private AdminRepository adminRepository;
 
     @Override
     public Athlete findAthleteByUsername(String username) {
-        // Return Athlete or null if not found
         return athleteRepository.findByUsername(username);
     }
 
     @Override
     public Coach findCoachByUsername(String username) {
-        // Return Coach or null if not found
         return coachRepository.findByUsername(username);
+    }
+
+    @Override
+    public Admin findAdminByUsername(String username){
+        return adminRepository.findByUsername(username);
     }
 
     @Override
     public Athlete updateAthleteProfile(String username, Map<String, String> profileData) {
         Athlete athlete = athleteRepository.findByUsername(username);
         if (athlete != null) {
-            if (profileData.containsKey("firstname")) athlete.setFirstname(profileData.get("firstname"));
-            if (profileData.containsKey("lastname")) athlete.setLastname(profileData.get("lastname"));
-            if (profileData.containsKey("email")) athlete.setEmail(profileData.get("email"));
-            if (profileData.containsKey("password")) athlete.setPassword(profileData.get("password"));
-            // Add other fields as necessary
+            athlete.setFirstname(profileData.get("firstname"));
+            athlete.setLastname(profileData.get("lastname"));
+            athlete.setEmail(profileData.get("email"));
+            athlete.setPassword(profileData.get("password"));
             return athleteRepository.save(athlete);
         }
         return null;
@@ -50,11 +55,24 @@ public class UserServiceImpl implements UserService {
     public Coach updateCoachProfile(String username, Map<String, String> profileData) {
         Coach coach = coachRepository.findByUsername(username);
         if (coach != null) {
-            if (profileData.containsKey("firstname")) { coach.setFirstname(profileData.get("firstname")); }
-            if (profileData.containsKey("lastname")) { coach.setLastname(profileData.get("lastname")); }
-            if (profileData.containsKey("email")) { coach.setEmail(profileData.get("email")); }
-            if (profileData.containsKey("password")) { coach.setPassword(profileData.get("password")); }
+            coach.setFirstname(profileData.get("firstname"));
+            coach.setLastname(profileData.get("lastname"));
+            coach.setEmail(profileData.get("email"));
+            coach.setPassword(profileData.get("password"));
             return coachRepository.save(coach);
+        }
+        return null;
+    }
+
+    @Override
+    public Admin updateAdminProfile(String username, Map<String, String> profileData) {
+        Admin admin = adminRepository.findByUsername(username);
+        if (admin != null) {
+            admin.setFirstname(profileData.get("firstname"));
+            admin.setLastname(profileData.get("lastname"));
+            admin.setEmail(profileData.get("email"));
+            if (profileData.containsKey("password")) { admin.setPassword(profileData.get("password")); }
+            return adminRepository.save(admin);
         }
         return null;
     }

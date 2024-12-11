@@ -1,3 +1,4 @@
+/* /components/profile.css */
 .profile-container {
     display: flex;
     flex-direction: column;
@@ -72,6 +73,9 @@
 .edit-profile-form button[type="submit"] {
     background-color: black;
     color: white;
+}
+.edit-profile-form button[type="submit"]:hover {
+    background-color: #333;
 }
 .edit-profile-form button[type="button"] {
     background-color: #e5e5e5;

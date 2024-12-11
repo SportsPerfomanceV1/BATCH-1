@@ -12,9 +12,6 @@ import java.util.Optional;
 @Service
 public class EventService {
 
-//    @Autowired
-//    private AddEventRepository addEventRepository;
-
     @Autowired
     private EventRepository eventRepository;
 
@@ -24,7 +21,7 @@ public class EventService {
     }
 
     // Fetch event details for eventId
-    public Optional<Event> getEventById(Long id) {
+    public Optional<Event> getEventById(int id) {
         return eventRepository.findById(id);
     }
 
@@ -33,10 +30,9 @@ public class EventService {
         return eventRepository.save(event);
     }
 
-    public Event updateEvent(Long id, Event eventDetails) {
+    public Event updateEvent(int id, Event eventDetails) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new RuntimeException("Event not found"));
 
-        event.setEventId(eventDetails.getEventId());
         event.setImage_url(eventDetails.getImage_url());
         event.setDate(eventDetails.getDate());
         event.setTime(eventDetails.getTime());
@@ -48,7 +44,7 @@ public class EventService {
         return eventRepository.save(event);
     }
 
-    public void deleteEvent(Long id) {
+    public void deleteEvent(int id) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new RuntimeException("Event not found"));
         eventRepository.delete(event);
     }

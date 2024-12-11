@@ -31,7 +31,6 @@ public class SignupService {
             Athlete athlete = new Athlete();
             athlete.setFirstname(firstname);
             athlete.setLastname(lastname);
-            athlete.setMiddlename(middlename);
             athlete.setUsername(username);
             athlete.setEmail(email);
             athlete.setPassword(encodedPassword);
@@ -40,7 +39,6 @@ public class SignupService {
             Coach coach = new Coach();
             coach.setFirstname(firstname);
             coach.setLastname(lastname);
-            coach.setMiddlename(middlename);
             coach.setUsername(username);
             coach.setEmail(email);
             coach.setPassword(encodedPassword);
@@ -49,7 +47,6 @@ public class SignupService {
             Admin admin = new Admin();
             admin.setFirstname(firstname);
             admin.setLastname(lastname);
-            admin.setMiddlename(middlename);
             admin.setUsername(username);
             admin.setEmail(email);
             admin.setPassword(encodedPassword);

@@ -1,5 +1,6 @@
+/* App.jsx */
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import SignupPage from './components/signup';
 import LoginPage from './components/login';
 import HomePage from './components/home';
@@ -8,35 +9,27 @@ import ResultPage from './components/results';
 import RegistrationsPage from './components/registrations';
 import NewsPage from './components/news';
 import ProfilePage from './components/profile';
-import Dashboard from './components/admin/admin-dashboard';
+import AdminDashboard from './components/admin/admin-dashboard';
 import AdminEventsPage from './components/admin/add-event';
 import AdminResultsPage from './components/admin/admin-result';
-import Navbar from './components/navbar';
-import Footer from './components/footer';
+import Navbar from './navbar';
+import Footer from './footer';
 import './App.css';
 
 const App = () => {
     const [loggedIn, setLoggedIn] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
     const [userType, setUserType] = useState('');
 
     useEffect(() => {
-        const isLoggedIn = sessionStorage.getItem("loggedIn") === "true";
-        const usertype = sessionStorage.getItem("userType");
-        setLoggedIn(isLoggedIn);
-        setUserType(usertype);
-        if (userType === 'admin'){
-            setIsAdmin(true);
-        }
+        setLoggedIn(sessionStorage.getItem("loggedIn") === "true");
+        setUserType(sessionStorage.getItem("userType"));
     }, []);
 
     const handleLogout = () => {
         setLoggedIn(false);
-        setIsAdmin(false);
         sessionStorage.removeItem("loggedIn");
-        sessionStorage.removeItem("isAdmin");
         sessionStorage.removeItem("userType");
-    };  
+    };
 
     const ProtectedRoute = ({ children }) => {
         return loggedIn ? children : <Navigate to="/login" replace />;
@@ -63,7 +56,7 @@ const App = () => {
                         <Route path="/news" element={<ProtectedRoute><NewsPage /></ProtectedRoute>} />
                         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
 
-                        <Route path="/admin-dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                        <Route path="/admin-dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
                         <Route path="/admin-events" element={<ProtectedRoute><AdminEventsPage /></ProtectedRoute>} />
                         <Route path="/admin-results" element={<ProtectedRoute><AdminResultsPage /></ProtectedRoute>} />
                         <Route path="/admin-profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />

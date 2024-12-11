@@ -6,7 +6,9 @@ const AdminResultsPage = () => {
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [registrations, setRegistrations] = useState([]);
+    const [results, setResults] = useState([]);
     const [error, setError] = useState('');
+    const [publishResults, setPublishResults] = useState(false);
 
     useEffect(() => {
         fetchEvents();
@@ -26,34 +28,55 @@ const AdminResultsPage = () => {
             const response = await axios.get(`http://localhost:8080/api/registrations/event/${eventId}`);
             setRegistrations(response.data);
             setSelectedEvent(events.find(event => event.id === eventId));
+            setResults(response.data.map(reg => ({
+                athleteId: reg.athleteId,
+                eventId: eventId,
+                result: '',
+                published: false
+            })));
         } catch (error) {
             setError('Failed to fetch registrations. Please try again later.');
         }
     };
 
-    const handlePublishResults = async () => {
+    const handleResultChange = (athleteId, value) => {
+        setResults(prevResults => prevResults.map(result => 
+            result.athleteId === athleteId ? { ...result, result: value } : result
+        ));
+    };
+
+    const handleSaveResults = async () => {
         try {
-            await axios.post(`http://localhost:8080/api/results/${selectedEvent.id}/publish`);
-            setError('Results published successfully.');
+            const resultsToSave = results.map(result => ({
+                ...result,
+                published: publishResults
+            }));
+            await axios.post('http://localhost:8080/api/results/save', resultsToSave);
+            setError('Results saved successfully.');
             setSelectedEvent(null);
             setRegistrations([]);
+            setResults([]);
         } catch (error) {
-            setError('Failed to publish results. Please try again.');
+            console.log(error);
+            setError('Failed to save results. Please try again.');
+            
         }
     };
 
     const renderEventCard = (event) => (
-        <div key={event.id} className="event-card">
-            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="event-image" />
-            <div className="event-details">
+        <div key={event.id} className="admin-result-card">
+            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="admin-result-img" />
+            <div className="admin-result-details">
                 <h3>{event.title}</h3>
-                <p>Organizer: {event.organizer}</p>
-                <p>Date: {event.date}</p>
-                <p>Location: {event.location}</p>
+                <p><strong>Organizer:</strong> {event.organizer}</p>
+                <p><strong>Date:</strong> {event.date}</p>
+                <p><strong>Time:</strong> {event.time}</p>
+                <p><strong>Fee:</strong> RS {event.fee}</p>
+                <p><strong>Location</strong>: {event.location}</p>
+                <button onClick={() => handleEntryPublish(event.id)} className="entry-publish-btn">
+                    Entry & Publish
+                </button>
             </div>
-            <button onClick={() => handleEntryPublish(event.id)} className="entry-publish-btn">
-                Entry/Publish
-            </button>
         </div>
     );
 
@@ -61,30 +84,44 @@ const AdminResultsPage = () => {
         <div className="admin-results-container">
             <h2>Admin Results Page</h2>
             {error && <p className="error-message">{error}</p>}
-            <div className="events-list">
+            <div className="admin-results-list">
                 {events.map(renderEventCard)}
             </div>
             {selectedEvent && (
-                <div className="results-popup">
-                    <h3>{selectedEvent.title} Results</h3>
+                <div className="admin-result-popup">
+                    <h3>{selectedEvent.title} - Enter Results</h3>
                     <table>
                         <thead>
                             <tr>
                                 <th>Athlete ID</th>
-                                <th>Published</th>
+                                <th>Result</th>
                             </tr>
                         </thead>
                         <tbody>
                             {registrations.map(reg => (
-                                <tr key={reg.id}>
+                                <tr key={reg.athleteId}>
                                     <td>{reg.athleteId}</td>
-                                    <td>{reg.published ? 'Yes' : 'No'}</td>
+                                    <td>
+                                        <input 
+                                            type="text" 
+                                            value={results.find(r => r.athleteId === reg.athleteId)?.result || ''}
+                                            onChange={(e) => handleResultChange(reg.athleteId, e.target.value)}
+                                        />
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                     <div className="button-group">
-                        <button onClick={handlePublishResults}>Publish Results</button>
+                        <label>
+                            <input 
+                                type="checkbox" 
+                                checked={publishResults}
+                                onChange={(e) => setPublishResults(e.target.checked)}
+                            />
+                            Publish Results
+                        </label>
+                        <button onClick={handleSaveResults}>Save Results</button>
                         <button onClick={() => setSelectedEvent(null)}>Close</button>
                     </div>
                 </div>

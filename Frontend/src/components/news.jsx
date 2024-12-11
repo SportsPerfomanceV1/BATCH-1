@@ -1,3 +1,4 @@
+/* /components/news.jsx */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -38,14 +39,14 @@ const NewsPage = () => {
 
         return (
             <div key={event.id} className="news-card">
-                <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="news-image" />
+                <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="news-img" />
                 <div className="news-details">
                     <h3>{newsHeading}</h3>
-                    <p>Organizer: {event.organizer}</p>
-                    <p>Date: {event.date}</p>
-                    <p>Time: {event.time}</p>
-                    <p>Location: {event.location}</p>
-                    <button 
+                    <p><strong>Organizer:</strong> {event.organizer}</p>
+                    <p><strong>Date:</strong> {event.date}</p>
+                    <p><strong>Time:</strong> {event.time}</p>
+                    <p><strong>Location</strong>: {event.location}</p>
+                    <button
                         onClick={() => navigate(isCompleted ? '/results' : '/events')}
                         className={isCompleted ? "view-result-btn" : "view-event-btn"}
                     >
@@ -66,6 +67,7 @@ const NewsPage = () => {
 
     return (
         <div className="news-container">
+            {error && <p className="error-message">{error}</p>}
             <div className="upcoming-news">
                 <h2>Upcoming Event News</h2>
                 {upcomingNews}

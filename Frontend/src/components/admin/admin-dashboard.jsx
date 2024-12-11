@@ -1,12 +1,12 @@
+/* /components/admin/admin-dashboard.jsx */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './admin-dashboard.css';
 
-const Dashboard = () => {
+const AdminDashboard = () => {
     const [events, setEvents] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [adminId, setAdminId] = useState(null);
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const images = [
@@ -21,8 +21,7 @@ const Dashboard = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentSlide((prevSlide) => (prevSlide + 1) % images.length);
-        }, 3000); // Change image every 3 seconds
-
+        }, 3000);
         return () => clearInterval(interval);
     }, [images.length]);
     
@@ -33,21 +32,6 @@ const Dashboard = () => {
         if (!loggedIn) {
             navigate('/login');
         } else if (userType === 'admin'){
-            const fetchAdminId = async () => {
-                const username = sessionStorage.getItem('username');
-                if (username) {
-                    try {
-                        const response = await axios.get(`http://localhost:8080/api/admin/${username}`);
-                        setAdminId(response.data.id);
-                    } catch (error) {
-                        console.log('Error fetching admin ID:', error);
-                        setError('Failed to fetch admin ID. Please try again later.');
-                    }
-                } else {
-                    setError('Username not found in session. Please log in again.');
-                }
-            };
-
             const fetchEvents = async () => {
                 try {
                     const response = await axios.get('http://localhost:8080/api/events');
@@ -67,22 +51,20 @@ const Dashboard = () => {
                 return eventDate >= currentDate;
             };
 
-            fetchAdminId();
+//            fetchAdminId();
             fetchEvents();
         }
     }, [navigate]);
 
     const renderEventCard = (event) => (
-        <div className="event-card" key={event.id}>
-            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="event-picture" />
+        <div className="admin-event-card" key={event.id}>
+            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="admin-event-img"/>
             <h3>{event.title}</h3>
-            <ul>
-                <li><strong>Organizer :</strong> {event.organizer}</li>
-                <li><strong>Date :</strong> {event.date}</li>
-                <li><strong>Location :</strong> {event.location}</li>
-                <li><strong>Fees :</strong> {event.fee}</li>
-            </ul>
-            <button className="view-event-btn" onClick={() => navigate('/events')}>View Event</button>
+            <p><strong>Organizer:</strong> {event.organizer}</p>
+            <p><strong>Date:</strong> {event.date}</p>
+            <p><strong>Location:</strong> {event.location}</p>
+            <p><strong>Fees:</strong> {event.fee}</p>
+            <button className="admin-view-event-btn" onClick={() => navigate('/events')}>View Event</button>
         </div>
     );
 
@@ -98,17 +80,17 @@ const Dashboard = () => {
     };
 
     const renderSlideshow = () => (
-        <div className="slideshow">
+        <div className="admin-slideshow">
             {images.map((image, index) => (
                 <img
                     key={index}
                     src={image}
                     alt={`Slide ${index + 1}`}
-                    className={`slideshow-image ${index === currentSlide ? 'fade' : ''}`}
+                    className={`admin-slideshow-image ${index === currentSlide ? 'fade' : ''}`}
                     style={{ opacity: index === currentSlide ? 3 : 0 }}
                 />
             ))}
-            <div className="slideshow-overlay">
+            <div className="admin-slideshow-overlay">
                 <h1>Good {getTimeofDay()}, {firstName}!</h1>
                 <p className='welcome-msg'>Welcome to Athelytics,</p>
                 <p>Your one-stop destination for sports and events</p>
@@ -117,30 +99,27 @@ const Dashboard = () => {
     );
 
     return (
-        <div className="home-page">
-            <div className="hero-section">
+        <div className="admin-page">
+            <div className="admin-hero-section">
                 {renderSlideshow()}
             </div>
 
-            <div className="content-section">
-                <div className="section-container">
-                    <div className="events-section">
-                        <h2>Upcoming Events</h2>
-                        <div className="event-grid">
-                            {events.length > 0 ? (
-                                events.map((event) => renderEventCard(event))
-                            ) : (
-                                <p className="no-events">
-                                    No upcoming events available at the moment. Check back soon for exciting new events!
-                                </p>
-                            )}
-                        </div>
-                        <Link to="/events" className="view-all-btn">View all events</Link>
-                    </div>
+            <div className="admin-events-section">
+                {error && <p className="admin-error-message">{error}</p>}
+                <h2>Upcoming Events</h2>
+                <div className="admin-event-grid">
+                    {events.length > 0 ? (
+                        events.map((event) => renderEventCard(event))
+                    ) : (
+                        <p className="admin-no-events">
+                            No upcoming events available at the moment. Check back soon for exciting new events!
+                        </p>
+                    )}
                 </div>
+                <Link to="/events" className="admin-view-all-btn">View more events</Link>
             </div>
         </div>
     );
 };
 
-export default Dashboard;
+export default AdminDashboard;

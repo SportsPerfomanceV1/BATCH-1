@@ -11,12 +11,11 @@ import lombok.Data;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long eventId;
+    private int id;
     private String image_url;
     private String date;
     private String time;
-    private Double fee;
+    private int fee;
     private String organizer;
     private String location;
     private String title;

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface EventResultRepository extends JpaRepository<EventResult, Long> {
-    List<EventResult> findByEventId(Long eventId);
-    List<EventResult> findByEventIdAndPublishedTrue(Long eventId);
-    List<EventResult> findByAthleteId(Long athleteId);
+public interface EventResultRepository extends JpaRepository<EventResult, Integer> {
+    List<EventResult> findByEventId(int eventId);
+    List<EventResult> findByEventIdAndPublishedTrue(int eventId);
+    List<EventResult> findByAthleteId(int athleteId);
 }

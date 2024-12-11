@@ -1,3 +1,4 @@
+/* /components/registrations.jsx */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
@@ -66,17 +67,17 @@ const RegistrationsPage = () => {
                                 {registration.status}
                             </td>
                             <td>
-                                {registration.status === 'pending' && (
+                                {registration.status === 'Pending' && (
                                     <>
                                         <button
                                             className="accept-button"
-                                            onClick={() => updateStatus(registration.registrationId, 'accepted')}
+                                            onClick={() => updateStatus(registration.registrationId, 'Accepted')}
                                         >
                                             Accept
                                         </button>
                                         <button
                                             className="reject-button"
-                                            onClick={() => updateStatus(registration.registrationId, 'rejected')}
+                                            onClick={() => updateStatus(registration.registrationId, 'Rejected')}
                                         >
                                             Reject
                                         </button>

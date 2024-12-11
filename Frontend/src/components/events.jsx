@@ -1,3 +1,4 @@
+/* /components/events.jsx */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +8,6 @@ const EventPage = () => {
     const [events, setEvents] = useState([]);
     const [userRegistrations, setUserRegistrations] = useState([]);
     const [error, setError] = useState('');
-    const [viewCompleted, setViewCompleted] = useState(true);
     const [athleteId, setAthleteId] = useState(null);
     const [userType, setUserType] = useState('');
     const navigate = useNavigate();
@@ -78,12 +78,11 @@ const EventPage = () => {
         return userRegistrations.some(registration => registration.eventId === eventId);
     };
 
-    // Function to fetch user registrations
     const updateUserRegistrations = async () => {
         if (athleteId) {
             try {
                 const response = await axios.get(`http://localhost:8080/api/registrations?athleteId=${athleteId}`);
-                setUserRegistrations(Array.isArray(response.data) ? response.data : []); // Ensure it's an array
+                setUserRegistrations(Array.isArray(response.data) ? response.data : []);
             } catch (error) {
                 console.error('Error fetching user registrations:', error);
             }
@@ -112,8 +111,8 @@ const EventPage = () => {
         }
     };
 
-    const completedEvents = events.filter(event => !isEventUpcoming(event.date));
-    const upcomingEvents = events.filter(event => isEventUpcoming(event.date));
+    const completedEvents = events.filter((event) => !isEventUpcoming(event.date));
+    const upcomingEvents = events.filter((event) => isEventUpcoming(event.date));
 
     const refreshEvents = async () => {
         try {
@@ -133,51 +132,54 @@ const EventPage = () => {
                 <div className="event-grid">
                     {completedEvents.map(event => (
                         <div key={event.id} className="event-card">
-                    <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} />
-                    <h3>{event.title}</h3>
-                    <p>Organizer: {event.organizer}</p>
-                    <p>Date: {event.date}</p>
-                    <p>Time: {event.time}</p>
-                    <p>Fee: RS {event.fee}</p>
-                    <p>Location: {event.location}</p>
-                    {userType === 'coach' ? (
-                        <button onClick={() => navigate('/results')}>View Results</button>
-                    ) : (
-                        isRegistered(event.id) ? (
-                        <button onClick={() => navigate('/results')}>View Result</button>
-                        ) : (
-                        <button>Not Participated</button>
-                        )
-                    )}
-                    </div>
-                ))}
+                            <img
+                                className="event-img" 
+                                src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`}
+                                alt={event.title} 
+                            />
+                            <h3>{event.title}</h3>
+                            <p><strong>Organizer:</strong> {event.organizer}</p>
+                            <p><strong>Date:</strong> {event.date}</p>
+                            <p><strong>Time:</strong> {event.time}</p>
+                            <p><strong>Fee:</strong> RS {event.fee}</p>
+                            <p><strong>Location:</strong> {event.location}</p>
+                            {userType === 'coach' ? (
+                                <button onClick={() => navigate('/results')}>View Results</button>
+                            ) : ( isRegistered(event.id) ? (
+                                    <button onClick={() => navigate('/results')}>View Result</button>
+                                ) : (
+                                    <button>Not Participated</button>
+                                )
+                            )}
+                        </div>
+                    ))}
                 </div>
             </div>
             <div className="upcoming-events">
                 <h2>Upcoming Events</h2>
                 <div className="event-grid">
-                {upcomingEvents.map(event => (
-                    <div key={event.id} className="event-card">
-                    <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="event-image" />
-                    <h3>{event.title}</h3>
-                    <p>Organizer: {event.organizer}</p>
-                    <p>Date: {event.date}</p>
-                    <p>Time: {event.time}</p>
-                    <p>Fee: RS {event.fee}</p>
-                    <p>Location: {event.location}</p>
-                    {userType === 'coach' ? (
-                        <button onClick={() => navigate('/registrations', { state: { eventId: event.id } })}>
-                           View Registrations
-                        </button>
-                    ) : (
-                        isRegistered(event.id) ? (
-                        <button>Already Registered</button>
-                        ) : (
-                        <button onClick={() => handleRegister(event.id)}>Register</button>
-                        )
-                    )}
-                    </div>
-                ))}
+                    {upcomingEvents.map(event => (
+                        <div key={event.id} className="event-card">
+                            <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="event-image" />
+                            <h3>{event.title}</h3>
+                            <p><strong>Organizer:</strong> {event.organizer}</p>
+                            <p><strong>Date:</strong> {event.date}</p>
+                            <p><strong>Time:</strong> {event.time}</p>
+                            <p><strong>Fee:</strong> RS {event.fee}</p>
+                            <p><strong>Location:</strong> {event.location}</p>
+                            {userType === ('coach' || 'admin') ? (
+                                <button onClick={() => navigate('/registrations', { state: { eventId: event.id } })}>
+                                    View Registrations
+                                </button>
+                            ) : (
+                                isRegistered(event.id) ? (
+                                    <button>Already Registered</button>
+                                ) : (
+                                    <button onClick={() => handleRegister(event.id)}>Register</button>
+                                )
+                            )}
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

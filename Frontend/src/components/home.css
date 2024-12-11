@@ -1,14 +1,14 @@
+/* /components/home.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
 }
-.slideshow {
+.home-slideshow {
     position: relative;
     width: 100%;
     height: 100vh;
     overflow: hidden;
 }
-.slideshow-image {
+.home-slideshow-image {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -18,112 +18,109 @@ body {
     object-position: top;
     transition: opacity 1s ease-in-out;
 }
-.slideshow-image.fade {
+.home-slideshow-image.fade {
     opacity: 1;
 }
-.slideshow-overlay {
+.home-slideshow-overlay {
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     background-color: rgba(0, 0, 0, 0.2);
     color: white;
     border-radius: 8px;
 }
-.slideshow-overlay h1 {
+.home-slideshow-overlay h1 {
     font-size: 45px;
     margin: 50px 0px 10px 40px;
 }
-.slideshow-overlay p {
+.home-slideshow-overlay p {
     font-size: 25px;
     margin: 2px 40px;
 }
-.slideshow-overlay p welcome-msg{
-    font-size: 50px;
-    margin: 10px 40px;
-}
 
-.content-section {
-    padding: 10px 0;
-    max-width: 1300px;
-    margin: 30px auto;
-    border-radius: 15px;
-}
-.section-container {
-    display: flex;
-    flex-direction: column;
-    max-width: 1200px;
-    margin: 0px auto;
-    padding: 0px 10px;
-}
-.events-section {
+.home-events-section {
     background-color: #f5f5f5;
-    padding: 5px;
-    margin-bottom: 10px;
     border-radius: 15px;
-    position: relative;
-    padding-bottom: 50px;
-}
-.events-section h2{
-    margin: 25px 0 0 25px;  
-}
-.event-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin: 10px;
-}
-.event-card {
-    background-color: #f5f5f5;
-    border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    padding: 15px;
-    transition: all 0.3s ease;
+    padding: 25px 25px 70px 25px;
+    margin: 20px auto;
     position: relative;
+    max-width: 1200px;
 }
-.event-card hover {
+.home-events-section h2{
+    color: #333;
+}
+.error-message {
+    color: #dc3545;
+    margin-bottom: 10px;
+}
+.home-event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+.home-event-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 15px 15px 45px 15px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+}
+.home-event-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
-.event-card img {
+.home-event-img {
     width: 100%;
     border-radius: 8px;
+    object-fit: cover;
 }
-.view-event-btn {
+.home-event-card h3{
+    color: #333;
+    margin: 5px 0 15px 0;
+}
+.home-event-card p {
+    margin: 5px 0 5px 3px;
+    color: #333;
+}
+.home-view-event-btn {
     background-color: black;
     color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    text-decoration: none;
+    font-size: 15px;
     border-radius: 5px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
     position: absolute;
-    bottom: 20px;
+    bottom: 15px;
     right: 20px;
     transition: background-color 0.3s ease;
 }
-.view-event-btn hover {
-    background-color: #444;
+.home-view-event-btn:hover {
+    background-color: #333;
 }
-.view-all-btn {
-    text-decoration: none;
+.home-view-all-btn {
     background-color: black;
     color: white;
-    border: none;
-    padding: 10px 20px;
+    padding: 10px 17px;
+    border-radius: 6px;
     cursor: pointer;
-    border-radius: 5px;
+    text-decoration: none;
     position: absolute;
-    bottom: 35px;
-    right: 35px;
+    bottom: 20px;
+    right: 25px;
     transition: background-color 0.3s ease;
 }
-.view-all-btn:hover {
+.home-view-all-btn:hover {
     text-decoration: none;
-    background-color: #444;
+    background-color: #333;
 }
-.no-events {
+.home-no-events {
     grid-column: 1 / -1;
     text-align: center;
     padding: 15px;
@@ -133,7 +130,7 @@ body {
     color: #666;
 }
 @media (max-width: 768px) {
-    .event-grid {
+    .home-event-grid {
         grid-template-columns: 1fr;
     }
 }

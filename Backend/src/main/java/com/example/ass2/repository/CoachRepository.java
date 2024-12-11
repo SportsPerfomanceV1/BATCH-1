@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CoachRepository extends JpaRepository<Coach, Long> {
+public interface CoachRepository extends JpaRepository<Coach, Integer> {
     Coach findByUsernameAndEmailAndPassword(String username, String email, String password);
     Coach findByUsername(String username);
-
-    Coach findByEmailAndPassword(String email, String password);
+    Coach findByEmail(String email);
 }

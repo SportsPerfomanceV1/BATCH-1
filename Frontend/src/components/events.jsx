@@ -9,6 +9,7 @@ const EventPage = () => {
     const [userRegistrations, setUserRegistrations] = useState([]);
     const [error, setError] = useState('');
     const [athleteId, setAthleteId] = useState(null);
+    const [athleteName, setAthleteName] = useState(null);
     const [userType, setUserType] = useState('');
     const navigate = useNavigate();
 
@@ -27,7 +28,9 @@ const EventPage = () => {
                 if (username && userType==='athlete') {
                     try {
                         const response = await axios.get(`http://localhost:8080/api/athletes/${username}`);
-                        setAthleteId(response.data.id); // Set athlete ID from response
+                        setAthleteId(response.data.id);
+                        setAthleteName(response.data.firstname);
+                        console.log("Athlete Id:", athleteId, "Athlete Name:", athleteName);
                     } catch (error) {
                         console.error('Error fetching athlete ID:', error);
                         setError('Failed to fetch athlete ID. Please try again later.');
@@ -36,8 +39,6 @@ const EventPage = () => {
                     setError('Username not found in session. Please log in again.');
                 }
             };
-
-            fetchAthleteId();
 
             const fetchEvents = async () => {
                 try {
@@ -63,11 +64,12 @@ const EventPage = () => {
                 }
             };
 
+            fetchAthleteId();
             fetchEvents();
             refreshEvents();
             fetchUserRegistrations();
         }
-    }, [navigate, athleteId]);
+    }, [navigate, athleteId, athleteName]);
 
     const isEventUpcoming = (eventDate) => {
         const currentDate = new Date().toISOString().split("T")[0];
@@ -89,7 +91,7 @@ const EventPage = () => {
         }
     };
 
-    const handleRegister = async (eventId) => {
+    const handleRegister = async (eventId, eventName, athleteName) => {
         if (isRegistered(eventId)) { 
             window.alert("Already registered for the event");
             return;
@@ -102,7 +104,7 @@ const EventPage = () => {
                     alert('Athlete ID is not available. Please log in again.');
                     return;
                 }
-                const response = await axios.post('http://localhost:8080/api/registrations', { eventId, athleteId });
+                const response = await axios.post('http://localhost:8080/api/registrations', { eventId, athleteId, eventName, athleteName });
                 alert(response.data);
                 updateUserRegistrations();
             } catch (error) {
@@ -137,7 +139,7 @@ const EventPage = () => {
                                 src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`}
                                 alt={event.title} 
                             />
-                            <h3>{event.title}</h3>
+                            <h3>{event.id}. {event.title}</h3>
                             <p><strong>Organizer:</strong> {event.organizer}</p>
                             <p><strong>Date:</strong> {event.date}</p>
                             <p><strong>Time:</strong> {event.time}</p>
@@ -161,21 +163,21 @@ const EventPage = () => {
                     {upcomingEvents.map(event => (
                         <div key={event.id} className="event-card">
                             <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="event-image" />
-                            <h3>{event.title}</h3>
+                            <h3>{event.id}. {event.title}</h3>
                             <p><strong>Organizer:</strong> {event.organizer}</p>
                             <p><strong>Date:</strong> {event.date}</p>
                             <p><strong>Time:</strong> {event.time}</p>
                             <p><strong>Fee:</strong> RS {event.fee}</p>
                             <p><strong>Location:</strong> {event.location}</p>
                             {userType === ('coach' || 'admin') ? (
-                                <button onClick={() => navigate('/registrations', { state: { eventId: event.id } })}>
+                                <button onClick={() => navigate('/registrations', { state: { eventId: event.id, eventName: event.title} })}>
                                     View Registrations
                                 </button>
                             ) : (
                                 isRegistered(event.id) ? (
                                     <button>Already Registered</button>
                                 ) : (
-                                    <button onClick={() => handleRegister(event.id)}>Register</button>
+                                    <button onClick={() => handleRegister(event.id, event.title, athleteName)}>Register</button>
                                 )
                             )}
                         </div>

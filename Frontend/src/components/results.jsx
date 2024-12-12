@@ -88,6 +88,49 @@ const ResultPage = () => {
         }
     };
 
+    const AllResultPopup = ({ result, onClose}) => {
+        if (!result || !result.results) {
+            return null;
+        }
+        const sortedResults = result.results.sort((a, b) => parseInt(a.result) - parseInt(b.result));
+
+        return (
+            <div className="result-popup">
+                <div className="result-popup-content">
+                    <div className="popup-left">
+                        <img src={`${process.env.PUBLIC_URL}/event_pics/${result.eventDetails?.id}.webp`} alt={result.eventDetails?.title} className="event-image" />
+                        <h2>{result.eventDetails?.id}. {result.eventDetails?.title}</h2>
+                        <p><strong>Organizer:</strong> {result.eventDetails?.organizer}</p>
+                        <p><strong>Date:</strong> {result.eventDetails?.date}</p>
+                        <p><strong>Time:</strong> {result.eventDetails?.time}</p>
+                        <p><strong>Location:</strong> {result.eventDetails?.location}</p>
+                    </div>
+                    <div className="popup-right">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Athlete ID</th>
+                                    <th>Athlete Name</th>
+                                    <th>Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {sortedResults.map((r, index) => (
+                                    <tr key={r.id}>
+                                        <td>{r.athleteId}</td>
+                                        <td>{r.athleteName}</td>
+                                        <td>{r.result}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        <button onClick={onClose}>Close</button>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     const ResultPopup = ({ result, onClose, athleteId, userType}) => {
         if (!result || !result.results) {
             return null;
@@ -107,39 +150,41 @@ const ResultPage = () => {
         return (
             <div className="result-popup">
                 <div className="result-popup-content">
-                    <img src={`${process.env.PUBLIC_URL}/event_pics/${result.eventDetails?.id}.webp`} alt={result.eventDetails?.title} className="event-image" />
-                    <h2>{result.eventDetails?.title}</h2>
-                    <p><strong>Organizer:</strong> {result.eventDetails?.organizer}</p>
-                    <p><strong>Date:</strong> {result.eventDetails?.date}</p>
-                    <p><strong>Time:</strong> {result.eventDetails?.time}</p>
-                    <p><strong>Location:</strong> {result.eventDetails?.location}</p>
-                    {userType === 'athlete' && (
-                    <>
-                        <p><strong>Your Position:</strong> {userResult.result}</p>
-                        <p>{getPlacementMessage(parseInt(userResult.result))}</p>
-                    </>
-                    )}
-                    
+                    <div className="popup-left">
+                        <img src={`${process.env.PUBLIC_URL}/event_pics/${result.eventDetails?.id}.webp`} alt={result.eventDetails?.title} className="event-image" />
+                        <h2>{result.eventDetails?.id}. {result.eventDetails?.title}</h2>
+                        <p><strong>Organizer:</strong> {result.eventDetails?.organizer}</p>
+                        <p><strong>Date:</strong> {result.eventDetails?.date}</p>
+                        <p><strong>Time:</strong> {result.eventDetails?.time}</p>
+                        <p><strong>Location:</strong> {result.eventDetails?.location}</p>
+                        {userType === 'athlete' && (
+                        <>
+                            <p><strong>Your Position:</strong> {userResult.result}</p>
+                            <p>{getPlacementMessage(parseInt(userResult.result))}</p>
+                        </>
+                        )}
+                    </div>
+                    <div className="popup-right">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Position</th>
                                     <th>Athlete ID</th>
+                                    <th>Athlete Name</th>
                                     <th>Result</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {sortedResults.map((r, index) => (
                                     <tr key={r.id}>
-                                        <td>{index + 1}</td>
                                         <td>{r.athleteId}</td>
+                                        <td>{r.athleteName}</td>
                                         <td>{r.result}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-                    
                     <button onClick={onClose}>Close</button>
+                    </div>
                 </div>
             </div>
         );
@@ -148,13 +193,13 @@ const ResultPage = () => {
     const renderEventCard = (event) => (
         <div key={event.id} className="result-card">
             <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title}/>
-            <h3>{event.title}</h3>
+            <h3>{event.id}. {event.title}</h3>
             <p><strong>Organizer</strong>: {event.organizer}</p>
             <p><strong>Date:</strong> {event.date}</p>
             <p><strong>Time:</strong> {event.time}</p>
             <p><strong>Fee:</strong> RS {event.fee}</p>
             <p><strong>Location:</strong> {event.location}</p>
-            <button onClick={() => handleAllViewResult(event.eventId || event.eventId)}>View Results</button>
+            <button onClick={() => handleAllViewResult(event.id)}>View Results</button>
         </div>
     );
 
@@ -169,7 +214,7 @@ const ResultPage = () => {
                         return (
                             <div key={result.id} className="result-card">
                                 <img src={`${process.env.PUBLIC_URL}/event_pics/${event?.id}.webp`} alt={event?.title}/>
-                                <h3>{event?.title}</h3>
+                                <h3>{event?.id}. {event?.title}</h3>
                                 <p><strong>Organizer:</strong> {event?.organizer}</p>
                                 <p><strong>Date:</strong> {event?.date}</p>
                                 <p><strong>Location:</strong> {event?.location}</p>

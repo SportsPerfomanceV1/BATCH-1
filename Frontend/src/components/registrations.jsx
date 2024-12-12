@@ -9,6 +9,7 @@ const RegistrationsPage = () => {
     const [error, setError] = useState('');
     const location = useLocation();
     const eventId = location.state?.eventId;
+    const eventName = location.state?.eventName;
 
     useEffect(() => {
         const fetchRegistrations = async () => {
@@ -43,14 +44,15 @@ const RegistrationsPage = () => {
 
     return (
         <div className="registrations-container">
-            <h2>Registrations for Event {eventId}</h2>
+            <h2>Registrations for Event {eventId}. {eventName}</h2>
             {error && <p className="error-message">{error}</p>}
             <table className="registrations-table">
                 <thead>
                     <tr>
                         <th>Registration ID</th>
                         <th>Athlete ID</th>
-                        <th>Event ID</th>
+                        <th>Athlete</th>
+                        <th>Event</th>
                         <th>Registration Date</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -61,7 +63,8 @@ const RegistrationsPage = () => {
                         <tr key={registration.registrationId}>
                             <td>{registration.registrationId}</td>
                             <td>{registration.athleteId}</td>
-                            <td>{registration.eventId}</td>
+                            <td>{registration.athleteName}</td>
+                            <td>{registration.eventId}. {registration.eventName}</td>
                             <td>{new Date(registration.registrationDate).toLocaleDateString()}</td>
                             <td className={`status-${registration.status.toLowerCase()}`}>
                                 {registration.status}

@@ -19,7 +19,10 @@ public class RegistrationController {
     @PostMapping
     public ResponseEntity<String> registerAthlete(@RequestBody Registration registrationRequest) {
         Registration registration = registrationService.registerAthlete(
-                registrationRequest.getEventId(), registrationRequest.getAthleteId()
+                registrationRequest.getEventId(),
+                registrationRequest.getAthleteId(),
+                registrationRequest.getEventName(),
+                registrationRequest.getAthleteName()
         );
         return ResponseEntity.ok("Registration successful: " + registration.getRegistrationId());
     }

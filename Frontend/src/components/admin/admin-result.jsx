@@ -25,8 +25,8 @@ const AdminResultsPage = () => {
 
     const handleEntryPublish = async (eventId) => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/registrations/event/${eventId}`);
-            setRegistrations(response.data);
+            const response = await axios.get(`http://localhost:8080/api/registrations/event/${eventId}?status=Accepted`);
+            setRegistrations(Array.isArray(response.data) ? response.data : []);
             setSelectedEvent(events.find(event => event.id === eventId));
             setResults(response.data.map(reg => ({
                 athleteId: reg.athleteId,
@@ -67,14 +67,14 @@ const AdminResultsPage = () => {
         <div key={event.id} className="admin-result-card">
             <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="admin-result-img" />
             <div className="admin-result-details">
-                <h3>{event.title}</h3>
+                <h3>{event.id}. {event.title}</h3>
                 <p><strong>Organizer:</strong> {event.organizer}</p>
                 <p><strong>Date:</strong> {event.date}</p>
                 <p><strong>Time:</strong> {event.time}</p>
                 <p><strong>Fee:</strong> RS {event.fee}</p>
                 <p><strong>Location</strong>: {event.location}</p>
                 <button onClick={() => handleEntryPublish(event.id)} className="entry-publish-btn">
-                    Entry & Publish
+                    Enter Results
                 </button>
             </div>
         </div>
@@ -94,6 +94,7 @@ const AdminResultsPage = () => {
                         <thead>
                             <tr>
                                 <th>Athlete ID</th>
+                                <th>Athlete Name</th>
                                 <th>Result</th>
                             </tr>
                         </thead>
@@ -101,6 +102,7 @@ const AdminResultsPage = () => {
                             {registrations.map(reg => (
                                 <tr key={reg.athleteId}>
                                     <td>{reg.athleteId}</td>
+                                    <td>{reg.athleteName}</td>
                                     <td>
                                         <input 
                                             type="text" 

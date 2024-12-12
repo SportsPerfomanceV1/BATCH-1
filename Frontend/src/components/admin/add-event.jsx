@@ -64,7 +64,7 @@ const AdminEventsPage = () => {
         <div key={event.id} className="add-event-card">
             <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="add-event-img" />
             <div className="add-event-details">
-                <h3>{event.title}</h3>
+                <h3>{event.id}. {event.title}</h3>
                 <p><strong>Organizer:</strong> {event.organizer}</p>
                 <p><strong>Date:</strong> {event.date}</p>
                 <p><strong>Time:</strong> {event.time}</p>

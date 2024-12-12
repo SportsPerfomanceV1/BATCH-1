@@ -16,7 +16,9 @@ public class EventResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int eventId;
+    private String eventName;
     private int athleteId;
+    private String athleteName;
     private String result;
     private boolean published;
 

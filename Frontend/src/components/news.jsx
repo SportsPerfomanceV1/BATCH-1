@@ -41,7 +41,7 @@ const NewsPage = () => {
             <div key={event.id} className="news-card">
                 <img src={`${process.env.PUBLIC_URL}/event_pics/${event.id}.webp`} alt={event.title} className="news-img" />
                 <div className="news-details">
-                    <h3>{newsHeading}</h3>
+                    <h3>{event.id}. {newsHeading}</h3>
                     <p><strong>Organizer:</strong> {event.organizer}</p>
                     <p><strong>Date:</strong> {event.date}</p>
                     <p><strong>Time:</strong> {event.time}</p>

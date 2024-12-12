@@ -15,10 +15,12 @@ public class RegistrationService {
     private RegistrationRepository registrationRepository;
 
     // Method to register an athlete
-    public Registration registerAthlete(int eventId, int athleteId) {
+    public Registration registerAthlete(int eventId, int athleteId, String eventName, String athleteName) {
         Registration registration = new Registration();
         registration.setEventId(eventId);
+        registration.setEventName(eventName);
         registration.setAthleteId(athleteId);
+        registration.setAthleteName(athleteName);
         registration.setRegistrationDate(LocalDate.now());
         registration.setStatus("Pending");
         return registrationRepository.save(registration);

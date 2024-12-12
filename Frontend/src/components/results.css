@@ -83,11 +83,23 @@
     background-color: white;
     padding: 20px;
     border-radius: 8px;
-    max-width: 500px;
+    max-width: 1000px;
     width: 100%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
     padding-bottom: 70px;
+}
+.popup-left {
+    flex: 1;
+    padding: 10px;
+}
+.popup-right {
+    flex: 1;
+    padding: 18px;
+    overflow-x: auto;
 }
 .result-popup-content img {
     width: 100%;

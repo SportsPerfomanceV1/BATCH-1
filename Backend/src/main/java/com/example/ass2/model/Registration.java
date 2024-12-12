@@ -16,7 +16,9 @@ public class Registration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int registrationId;
     private int eventId;
+    private String eventName;
     private int athleteId;
+    private String athleteName;
     private LocalDate registrationDate;
     private String status;
 
